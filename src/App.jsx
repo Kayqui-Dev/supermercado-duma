@@ -40,36 +40,53 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Encartes de Ofertas Reais (Fotos Reais)
-  const encartesOfertas = [
+  // Catálogo Único de Produtos em Promoção (Contém Carnes dos Encartes + Produtos Gerais)
+  const produtosCatalogo = [
+    // Carnes / Açougue (Promoções Especiais)
     {
       id: 1,
       nome: "Alcatra c/ Maminha Kg",
+      precoOriginal: "49,90",
+      preco: "41,99",
+      desconto: "15% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
       imagem: "/assets/promos/alcatra.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Alcatra c/ Maminha (R$ 41,99/Kg) em promoção."
+      msgWhatsApp: "Olá! Gostaria de encomendar Alcatra c/ Maminha em oferta (R$ 41,99/Kg) do catálogo."
     },
     {
       id: 2,
-      nome: "Patinho Kg",
+      nome: "Patinho Selecionado Kg",
+      precoOriginal: "45,90",
+      preco: "38,49",
+      desconto: "16% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
       imagem: "/assets/promos/patinho.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Patinho (R$ 38,49/Kg) em promoção."
+      msgWhatsApp: "Olá! Gostaria de encomendar Patinho em oferta (R$ 38,49/Kg) do catálogo."
     },
     {
       id: 3,
       nome: "Lagarto Kg",
+      precoOriginal: "42,90",
+      preco: "36,49",
+      desconto: "15% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
       imagem: "/assets/promos/lagarto.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Lagarto (R$ 36,49/Kg) em promoção."
+      msgWhatsApp: "Olá! Gostaria de encomendar Lagarto em oferta (R$ 36,49/Kg) do catálogo."
     },
     {
       id: 4,
       nome: "Costela Ponta de Agulha Kg",
+      precoOriginal: "29,90",
+      preco: "23,99",
+      desconto: "20% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
       imagem: "/assets/promos/costela.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Costela Ponta de Agulha (R$ 23,99/Kg) em promoção."
-    }
-  ];
-
-  // Catálogo Geral de Produtos EM PROMOÇÃO (Utilizando as imagens SVG existentes)
-  const produtosCatalogo = [
+      msgWhatsApp: "Olá! Gostaria de encomendar Costela Ponta de Agulha em oferta (R$ 23,99/Kg) do catálogo."
+    },
     {
       id: 101,
       nome: "Picanha Fatiada Selecionada",
@@ -79,8 +96,9 @@ function App() {
       unidade: "Kg",
       categoria: "carnes",
       imagem: "/assets/produtos/picanha.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Picanha Fatiada em oferta (R$ 69,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Picanha Fatiada em oferta (R$ 69,99/Kg) do catálogo."
     },
+    // Mercearia
     {
       id: 102,
       nome: "Feijão Carioca Tipo 1",
@@ -90,8 +108,9 @@ function App() {
       unidade: "Kg",
       categoria: "mercearia",
       imagem: "/assets/produtos/feijao.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Feijão Carioca Tipo 1 em oferta (R$ 7,49/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Feijão Carioca Tipo 1 em oferta (R$ 7,49/Kg) do catálogo."
     },
+    // Hortifrúti
     {
       id: 103,
       nome: "Tomate Italiano Fresco",
@@ -101,7 +120,7 @@ function App() {
       unidade: "Kg",
       categoria: "hortifruti",
       imagem: "/assets/produtos/tomate.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Tomate Italiano em oferta (R$ 6,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Tomate Italiano em oferta (R$ 6,99/Kg) do catálogo."
     },
     {
       id: 104,
@@ -112,8 +131,9 @@ function App() {
       unidade: "Kg",
       categoria: "hortifruti",
       imagem: "/assets/produtos/banana.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Banana Prata em oferta (R$ 5,49/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Banana Prata em oferta (R$ 5,49/Kg) do catálogo."
     },
+    // Padaria
     {
       id: 105,
       nome: "Pão Francês Crocante",
@@ -123,7 +143,7 @@ function App() {
       unidade: "Kg",
       categoria: "padaria",
       imagem: "/assets/produtos/pao.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Pão Francês Crocante em oferta (R$ 14,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Pão Francês Crocante em oferta (R$ 14,99/Kg) do catálogo."
     },
     {
       id: 106,
@@ -134,8 +154,9 @@ function App() {
       unidade: "Un",
       categoria: "padaria",
       imagem: "/assets/produtos/bolo.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Bolo Caseiro de Chocolate em oferta (R$ 22,00/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Bolo Caseiro de Chocolate em oferta (R$ 22,00/Un) do catálogo."
     },
+    // Adega
     {
       id: 107,
       nome: "Cerveja Heineken Lata 350ml",
@@ -145,7 +166,7 @@ function App() {
       unidade: "Un",
       categoria: "adega",
       imagem: "/assets/produtos/cerveja.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Cerveja Heineken Lata em oferta (R$ 5,99/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Cerveja Heineken Lata em oferta (R$ 5,99/Un) do catálogo."
     },
     {
       id: 108,
@@ -156,7 +177,7 @@ function App() {
       unidade: "Un",
       categoria: "adega",
       imagem: "/assets/produtos/vinho.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Vinho Tinto Reservado em oferta (R$ 29,90/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de encomendar Vinho Tinto Reservado em oferta (R$ 29,90/Un) do catálogo."
     }
   ];
 
@@ -204,20 +225,7 @@ function App() {
         ease: 'back.out(1.2)'
       }, '-=0.2');
 
-      // 2. Animação ScrollTrigger: Encartes
-      gsap.from('.flyer-card', {
-        scrollTrigger: {
-          trigger: '.offers-section',
-          start: 'top 85%',
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power2.out'
-      });
-
-      // 3. Animação ScrollTrigger: Grid de Produtos
+      // 2. Animação ScrollTrigger: Grid de Produtos
       gsap.from('.product-card', {
         scrollTrigger: {
           trigger: '.catalog-section',
@@ -253,7 +261,6 @@ function App() {
           </a>
           <ul className="navbar-links">
             <li><a href="#inicio">Início</a></li>
-            <li><a href="#promocoes">Promoções</a></li>
             <li><a href="#catalogo">Catálogo</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
@@ -301,57 +308,13 @@ function App() {
         </div>
       </section>
 
-      {/* PROMOÇÕES DA SEMANA (ENCARTES EM CARROSSEL MOBILE / GRID DESKTOP) */}
-      <section className="offers-section" id="promocoes">
-        <div className="container">
-          <div className="section-title-wrapper">
-            <h2 className="section-title">Promoções Imperdíveis</h2>
-            <p className="section-subtitle">
-              Confira os encartes exclusivos do nosso açougue. Role para o lado no celular ou clique para pedir direto pelo WhatsApp!
-            </p>
-          </div>
-
-          {/* Feed de Folhas/Flyers de Carnes (Carrossel Horizontal no celular) */}
-          <div className="flyers-feed">
-            {encartesOfertas.map((flyer) => (
-              <article 
-                className="flyer-card" 
-                key={flyer.id}
-                onClick={() => handleWhatsappAction(flyer.msgWhatsApp)}
-                aria-label={`Pedir ${flyer.nome} no WhatsApp`}
-              >
-                <div className="flyer-img-container">
-                  <img src={flyer.imagem} alt={flyer.nome} loading="lazy" />
-                  <span className="flyer-badge-tag">Oferta</span>
-                  <div className="flyer-overlay">
-                    <MessageCircle size={24} fill="currentColor" />
-                    <span>Pedir pelo WhatsApp</span>
-                  </div>
-                </div>
-                <div className="flyer-info-container">
-                  <h3 className="flyer-title">{flyer.nome}</h3>
-                  <div className="flyer-status">
-                    <span className="status-dot"></span>
-                    <span>Pronta entrega (Fresco)</span>
-                  </div>
-                  <button className="btn-card-whatsapp" onClick={(e) => { e.stopPropagation(); handleWhatsappAction(flyer.msgWhatsApp); }}>
-                    <MessageCircle size={16} fill="currentColor" />
-                    Pedir no WhatsApp
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CATÁLOGO DE PRODUTOS (FILTRO POR ABAS E GRID COMPACTO 2 COLUNAS MOBILE) */}
       <section className="catalog-section" id="catalogo">
         <div className="container">
           <div className="section-title-wrapper">
-            <h2 className="section-title">Nosso Catálogo em Promoção</h2>
+            <h2 className="section-title">Nosso Catálogo de Ofertas</h2>
             <p className="section-subtitle">
-              Navegue pelas abas abaixo e confira as ofertas especiais com descontos incríveis nos setores do Duma.
+              Confira as promoções ativas em nossos setores. Toque nas abas para filtrar e faça seu pedido direto no WhatsApp!
             </p>
           </div>
 
@@ -410,7 +373,7 @@ function App() {
           <div className="cta-container" style={{ marginTop: '40px' }}>
             <button 
               className="btn-cta-whatsapp"
-              onClick={() => handleWhatsappAction('Olá! Vi os encartes promocionais do Duma Supermercado e gostaria de enviar minha lista de compras.')}
+              onClick={() => handleWhatsappAction('Olá! Vi os produtos em promoção no catálogo do Duma Supermercado e gostaria de enviar minha lista de compras.')}
             >
               <MessageCircle size={20} fill="currentColor" />
               📲 ENVIAR MINHA LISTA DE COMPRAS
