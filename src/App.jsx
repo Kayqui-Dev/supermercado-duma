@@ -199,14 +199,23 @@ function App() {
               >
                 <div className="flyer-img-container">
                   <img src={flyer.imagem} alt={flyer.nome} loading="lazy" />
+                  <span className="flyer-badge-tag">Oferta da Semana</span>
                   <div className="flyer-overlay">
                     <MessageCircle size={24} fill="currentColor" />
                     <span>Pedir pelo WhatsApp</span>
                   </div>
                 </div>
-                <button className="btn-card-checkout" onClick={(e) => { e.stopPropagation(); handleWhatsappAction(flyer.msgWhatsApp); }}>
-                  🛒 PEDIR NO WHATSAPP
-                </button>
+                <div className="flyer-info-container">
+                  <h3 className="flyer-title">{flyer.nome}</h3>
+                  <div className="flyer-status">
+                    <span className="status-dot"></span>
+                    <span>Pronta entrega (Fresco)</span>
+                  </div>
+                  <button className="btn-card-whatsapp" onClick={(e) => { e.stopPropagation(); handleWhatsappAction(flyer.msgWhatsApp); }}>
+                    <MessageCircle size={16} fill="currentColor" />
+                    Pedir no WhatsApp
+                  </button>
+                </div>
               </article>
             ))}
           </div>
