@@ -158,11 +158,11 @@ section {
 }
 
 .pill-navbar.scrolled {
-  background-color: rgba(255, 255, 255, 0.85); /* Vidro fosco branco */
+  background-color: rgba(15, 23, 42, 0.85); /* Navy Escuro translúcido */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(15, 23, 42, 0.15);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   top: 15px;
 }
 
@@ -211,7 +211,7 @@ section {
 }
 
 .pill-navbar.scrolled .navbar-links a {
-  color: var(--brand-blue-dark); /* Escuro quando scrolled */
+  color: #ffffff; /* Sempre branco para contrastar com o navy escuro */
 }
 
 .navbar-links a:hover {
@@ -219,7 +219,7 @@ section {
 }
 
 .pill-navbar.scrolled .navbar-links a:hover {
-  color: var(--brand-red);
+  color: var(--brand-yellow);
 }
 
 .navbar-btn-whatsapp {
@@ -241,8 +241,8 @@ section {
 }
 
 .pill-navbar.scrolled .navbar-btn-whatsapp {
-  background-color: var(--brand-red);
-  color: #ffffff;
+  background-color: var(--brand-yellow);
+  color: #000000;
 }
 
 .navbar-btn-whatsapp:hover {
@@ -762,27 +762,58 @@ section {
 
 .product-pricing {
   display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.price-original {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.price-promo {
+  display: flex;
   align-items: baseline;
   gap: 2px;
 }
 
-.product-pricing .currency {
+.price-promo .currency {
   font-size: 11px;
   font-weight: 700;
   color: var(--brand-red);
 }
 
-.product-pricing .price-val {
+.price-promo .price-val {
   font-size: 18px;
   font-weight: 900;
   color: var(--brand-red);
   font-family: var(--font-title);
 }
 
-.product-pricing .unit {
+.price-promo .unit {
   font-size: 10px;
   color: var(--text-muted);
   font-weight: 600;
+}
+
+/* Badge de Desconto do Produto no Catálogo */
+.product-discount-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--brand-yellow);
+  color: #000000;
+  font-family: var(--font-title);
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  letter-spacing: 0.5px;
 }
 
 .btn-product-whatsapp {

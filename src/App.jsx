@@ -68,79 +68,95 @@ function App() {
     }
   ];
 
-  // Catálogo Geral de Produtos (Utilizando as imagens SVG existentes)
+  // Catálogo Geral de Produtos EM PROMOÇÃO (Utilizando as imagens SVG existentes)
   const produtosCatalogo = [
     {
       id: 101,
       nome: "Picanha Fatiada Selecionada",
+      precoOriginal: "89,90",
       preco: "69,99",
+      desconto: "22% OFF",
       unidade: "Kg",
       categoria: "carnes",
       imagem: "/assets/produtos/picanha.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Picanha Fatiada (R$ 69,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Picanha Fatiada em oferta (R$ 69,99/Kg) do catálogo."
     },
     {
       id: 102,
       nome: "Feijão Carioca Tipo 1",
+      precoOriginal: "9,90",
       preco: "7,49",
+      desconto: "24% OFF",
       unidade: "Kg",
       categoria: "mercearia",
       imagem: "/assets/produtos/feijao.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Feijão Carioca Tipo 1 (R$ 7,49/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Feijão Carioca Tipo 1 em oferta (R$ 7,49/Kg) do catálogo."
     },
     {
       id: 103,
       nome: "Tomate Italiano Fresco",
+      precoOriginal: "8,99",
       preco: "6,99",
+      desconto: "22% OFF",
       unidade: "Kg",
       categoria: "hortifruti",
       imagem: "/assets/produtos/tomate.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Tomate Italiano (R$ 6,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Tomate Italiano em oferta (R$ 6,99/Kg) do catálogo."
     },
     {
       id: 104,
       nome: "Banana Prata de Primeira",
+      precoOriginal: "6,99",
       preco: "5,49",
+      desconto: "21% OFF",
       unidade: "Kg",
       categoria: "hortifruti",
       imagem: "/assets/produtos/banana.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Banana Prata (R$ 5,49/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Banana Prata em oferta (R$ 5,49/Kg) do catálogo."
     },
     {
       id: 105,
       nome: "Pão Francês Crocante",
+      precoOriginal: "18,90",
       preco: "14,99",
+      desconto: "20% OFF",
       unidade: "Kg",
       categoria: "padaria",
       imagem: "/assets/produtos/pao.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Pão Francês (R$ 14,99/Kg) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Pão Francês Crocante em oferta (R$ 14,99/Kg) do catálogo."
     },
     {
       id: 106,
       nome: "Bolo Caseiro de Chocolate",
+      precoOriginal: "28,00",
       preco: "22,00",
+      desconto: "21% OFF",
       unidade: "Un",
       categoria: "padaria",
       imagem: "/assets/produtos/bolo.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Bolo Caseiro de Chocolate (R$ 22,00/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Bolo Caseiro de Chocolate em oferta (R$ 22,00/Un) do catálogo."
     },
     {
       id: 107,
       nome: "Cerveja Heineken Lata 350ml",
+      precoOriginal: "7,49",
       preco: "5,99",
+      desconto: "20% OFF",
       unidade: "Un",
       categoria: "adega",
       imagem: "/assets/produtos/cerveja.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Cerveja Heineken (R$ 5,99/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Cerveja Heineken Lata em oferta (R$ 5,99/Un) do catálogo."
     },
     {
       id: 108,
       nome: "Vinho Tinto Fino Reservado",
+      precoOriginal: "39,90",
       preco: "29,90",
+      desconto: "25% OFF",
       unidade: "Un",
       categoria: "adega",
       imagem: "/assets/produtos/vinho.svg",
-      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Vinho Tinto Reservado (R$ 29,90/Un) do catálogo."
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Vinho Tinto Reservado em oferta (R$ 29,90/Un) do catálogo."
     }
   ];
 
@@ -219,18 +235,18 @@ function App() {
   }, []);
 
   const handleWhatsappAction = (messageText) => {
-    const text = encodeURIComponent(messageText || 'Olá! Vi os produtos no site do Duma Supermercado e gostaria de fazer um pedido.');
+    const text = encodeURIComponent(messageText || 'Olá! Vi os produtos em promoção no site do Duma Supermercado e gostaria de fazer um pedido.');
     window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
   };
 
   return (
     <>
-      {/* NAVBAR — "A Ilha Flutuante" (Pill-shaped, fixed e centralizada) */}
+      {/* NAVBAR — "A Ilha Flutuante" (Pill-shaped, fixed e sempre com logo-white.png sem fundo) */}
       <nav className={`pill-navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
           <a href="#" className="navbar-logo" aria-label="Duma Supermercado">
             <img 
-              src={isScrolled ? "/assets/logo-red.png" : "/assets/logo-white.png"} 
+              src="/assets/logo-white.png" 
               alt="Duma Supermercado Logo" 
               className="navbar-logo-img" 
             />
@@ -333,9 +349,9 @@ function App() {
       <section className="catalog-section" id="catalogo">
         <div className="container">
           <div className="section-title-wrapper">
-            <h2 className="section-title">Nosso Catálogo</h2>
+            <h2 className="section-title">Nosso Catálogo em Promoção</h2>
             <p className="section-subtitle">
-              Navegue pelas abas abaixo e confira os preços dos produtos mais vendidos da nossa loja.
+              Navegue pelas abas abaixo e confira as ofertas especiais com descontos incríveis nos setores do Duma.
             </p>
           </div>
 
@@ -365,14 +381,18 @@ function App() {
               >
                 <div className="product-img-wrapper">
                   <img src={prod.imagem} alt={prod.nome} className="product-img" loading="lazy" />
+                  <span className="product-discount-badge">{prod.desconto}</span>
                   <span className="product-category-badge">{prod.categoria}</span>
                 </div>
                 <div className="product-details">
                   <h4 className="product-name">{prod.nome}</h4>
                   <div className="product-pricing">
-                    <span className="currency">R$</span>
-                    <span className="price-val">{prod.preco}</span>
-                    <span className="unit">/{prod.unidade}</span>
+                    <span className="price-original">R$ {prod.precoOriginal}</span>
+                    <div className="price-promo">
+                      <span className="currency">R$</span>
+                      <span className="price-val">{prod.preco}</span>
+                      <span className="unit">/{prod.unidade}</span>
+                    </div>
                   </div>
                   <button 
                     className="btn-product-whatsapp"
