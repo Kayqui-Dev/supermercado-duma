@@ -59,6 +59,25 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Monitorar Abertura do Carrinho para Animações GSAP nos cards internos
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
+      // Animação de mola na abertura do painel
+      gsap.fromTo('.cart-drawer', 
+        { x: '100%' }, 
+        { x: '0%', duration: 0.45, ease: 'power3.out' }
+      );
+      // Animação em cascata (stagger) dos itens do carrinho
+      gsap.fromTo('.cart-item', 
+        { opacity: 0, y: 30, scale: 0.95 }, 
+        { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.05, ease: 'back.out(1.2)', delay: 0.1 }
+      );
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isCartOpen]);
+
   // Catálogo Ampliado de Produtos em Promoção
   const produtosCatalogo = [
     // Carnes / Açougue (Promoções Especiais)
@@ -301,25 +320,50 @@ function App() {
   };
 
   const updateQuantity = (productId, amount) => {
-    setCart((prevCart) => {
-      return prevCart
-        .map((item) => {
-          if (item.id === productId) {
-            const newQty = item.quantidade + amount;
-            return newQty > 0 ? { ...item, quantidade: newQty } : null;
-          }
-          return item;
-        })
-        .filter(Boolean);
-    });
+    const item = cart.find(i => i.id === productId);
+    if (!item) return;
+
+    const newQty = item.quantidade + amount;
+    if (newQty <= 0) {
+      handleRemoveItem(productId);
+    } else {
+      setCart((prevCart) =>
+        prevCart.map((i) =>
+          i.id === productId ? { ...i, quantidade: newQty } : i
+        )
+      );
+    }
   };
 
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
+  // Remover Item com Animação de Saída Suave
+  const handleRemoveItem = (productId) => {
+    const itemElement = document.getElementById(`cart-item-${productId}`);
+    if (itemElement) {
+      itemElement.classList.add('removing');
+      // Aguarda o término da animação do CSS (300ms) para atualizar o estado
+      setTimeout(() => {
+        removeFromCart(productId);
+      }, 300);
+    } else {
+      removeFromCart(productId);
+    }
+  };
+
   const clearCart = () => {
-    setCart([]);
+    // Efeito de desaparecimento nos itens antes de limpar o estado
+    const items = document.querySelectorAll('.cart-item');
+    if (items.length > 0) {
+      items.forEach(el => el.classList.add('removing'));
+      setTimeout(() => {
+        setCart([]);
+      }, 300);
+    } else {
+      setCart([]);
+    }
   };
 
   const cartItemsCount = cart.reduce((total, item) => total + item.quantidade, 0);
@@ -357,7 +401,80 @@ function App() {
     }
   };
 
-  // GSAP: Animações de Entrada
+  // Efeito Cinematográfico: Partícula "Fly to Cart" usando GSAP
+  const animateFlyToCart = (startElement) => {
+    const targetElement = document.querySelector('.navbar-cart-btn');
+    if (!startElement || !targetElement) return;
+
+    const startRect = startElement.getBoundingClientRect();
+    const targetRect = targetElement.getBoundingClientRect();
+
+    // Cria a bolinha temporária
+    const particle = document.createElement('div');
+    particle.className = 'fly-to-cart-particle';
+    particle.innerHTML = '🛒';
+    document.body.appendChild(particle);
+
+    const startX = startRect.left + startRect.width / 2 - 15;
+    const startY = startRect.top + startRect.height / 2 - 15;
+    
+    const targetX = targetRect.left + targetRect.width / 2 - 15;
+    const targetY = targetRect.top + targetRect.height / 2 - 15;
+
+    // Define posição inicial da partícula
+    gsap.set(particle, {
+      x: startX + window.scrollX,
+      y: startY + window.scrollY,
+      scale: 1.2,
+      opacity: 1
+    });
+
+    // Animação em curva parabólica para o carrinho
+    const tl = gsap.timeline({
+      onComplete: () => {
+        particle.remove();
+        // Efeito de mola no botão de carrinho na navbar
+        gsap.fromTo(targetElement, 
+          { scale: 1 }, 
+          { scale: 1.35, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(1.5)' }
+        );
+        // Efeito de pulso no botão flutuante se ele estiver ativo no DOM
+        const floatCart = document.querySelector('.cart-float-btn');
+        if (floatCart) {
+          gsap.fromTo(floatCart, 
+            { scale: 1 }, 
+            { scale: 1.25, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(1.5)' }
+          );
+        }
+      }
+    });
+
+    tl.to(particle, {
+      x: targetX + window.scrollX,
+      y: targetY + window.scrollY,
+      scale: 0.3,
+      opacity: 0.8,
+      rotation: 360,
+      duration: 0.75,
+      ease: 'power2.inOut'
+    });
+  };
+
+  const handleAddToCartAction = (e, prod) => {
+    e.stopPropagation();
+    addToCart(prod);
+
+    // Mola rápida no botão clicado
+    gsap.fromTo(e.currentTarget, 
+      { scale: 1 }, 
+      { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }
+    );
+
+    // Dispara a bolinha voadora cinematográfica
+    animateFlyToCart(e.currentTarget);
+  };
+
+  // GSAP: Animações de Entrada Globais
   useEffect(() => {
     let ctx = gsap.context(() => {
       // 1. Entrada da Hero Section
@@ -412,24 +529,52 @@ function App() {
   const finalizarPedidoWhatsApp = () => {
     if (cart.length === 0) return;
 
-    let mensagem = `🛒 *NOVO PEDIDO - DUMA SUPERMERCADO*\n`;
-    mensagem += `=====================================\n`;
+    const agora = new Date();
+    const dataStr = agora.toLocaleDateString('pt-BR');
+    const horaStr = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    let mensagem = `🛒 *DUMA SUPERMERCADO - NOVO PEDIDO*\n`;
+    mensagem += `=========================================\n`;
+    mensagem += `📅 _Pedido enviado em: ${dataStr} às ${horaStr}_\n\n`;
     mensagem += `Olá! Gostaria de fazer o seguinte pedido do catálogo:\n\n`;
 
-    cart.forEach((item, index) => {
-      const unitPrice = parseFloat(item.preco.replace(',', '.'));
-      const itemTotal = unitPrice * item.quantidade;
-      const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
-      
-      mensagem += `*${index + 1}. ${item.nome}*\n`;
-      mensagem += `   Qtd: ${item.quantidade} ${item.unidade} | Preço: R$ ${item.preco}/${item.unidade}\n`;
-      mensagem += `   Subtotal: R$ ${formattedItemTotal}\n\n`;
+    // Agrupa itens do carrinho por setor
+    const itensPorSetor = {};
+    cart.forEach(item => {
+      if (!itensPorSetor[item.categoria]) {
+        itensPorSetor[item.categoria] = [];
+      }
+      itensPorSetor[item.categoria].push(item);
     });
 
-    mensagem += `=====================================\n`;
-    mensagem += `*TOTAL DO PEDIDO: R$ ${cartTotal.toFixed(2).replace('.', ',')}*\n`;
-    mensagem += `=====================================\n\n`;
-    mensagem += `*Formas de entrega e pagamento a combinar.*`;
+    // Renderiza cada setor que tem itens
+    setores.forEach(setor => {
+      const itensDoSetor = itensPorSetor[setor.id];
+      if (itensDoSetor && itensDoSetor.length > 0) {
+        mensagem += `-----------------------------------------\n`;
+        mensagem += `${setor.emoji} *${setor.nome.toUpperCase()}*\n`;
+        mensagem += `-----------------------------------------\n`;
+        
+        itensDoSetor.forEach(item => {
+          const unitPrice = parseFloat(item.preco.replace(',', '.'));
+          const itemTotal = unitPrice * item.quantidade;
+          const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
+          
+          mensagem += `• *${item.nome}*\n`;
+          mensagem += `  Qtd: ${item.quantidade} ${item.unidade} | Unitário: R$ ${item.preco}\n`;
+          mensagem += `  Subtotal: R$ ${formattedItemTotal}\n\n`;
+        });
+      }
+    });
+
+    mensagem += `=========================================\n`;
+    mensagem += `📊 *RESUMO DO PEDIDO*\n`;
+    mensagem += `=========================================\n`;
+    mensagem += `📦 Total de Itens: ${cartItemsCount}\n`;
+    mensagem += `💰 *VALOR TOTAL: R$ ${cartTotal.toFixed(2).replace('.', ',')}*\n`;
+    mensagem += `=========================================\n\n`;
+    mensagem += `*Formas de entrega e pagamento a combinar.*\n`;
+    mensagem += `Aguardando retorno para fechar o pedido. Obrigado!`;
 
     const text = encodeURIComponent(mensagem);
     window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
@@ -608,14 +753,14 @@ function App() {
                                   <Minus size={14} />
                                 </button>
                                 <span className="qty-val">{cartItem.quantidade} {prod.unidade}</span>
-                                <button className="qty-btn" onClick={() => addToCart(prod)} aria-label="Aumentar quantidade">
+                                <button className="qty-btn" onClick={(e) => handleAddToCartAction(e, prod)} aria-label="Aumentar quantidade">
                                   <Plus size={14} />
                                 </button>
                               </div>
                             ) : (
                               <button 
                                 className="btn-product-add"
-                                onClick={(e) => { e.stopPropagation(); addToCart(prod); }}
+                                onClick={(e) => handleAddToCartAction(e, prod)}
                               >
                                 <Plus size={14} /> Adicionar
                               </button>
@@ -762,7 +907,7 @@ function App() {
                   const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
                   
                   return (
-                    <div className="cart-item" key={item.id}>
+                    <div className="cart-item" key={item.id} id={`cart-item-${item.id}`}>
                       <div className="cart-item-img-wrapper">
                         <img src={item.imagem} alt={item.nome} className="cart-item-img" />
                       </div>
@@ -782,7 +927,7 @@ function App() {
                           <span className="cart-item-subtotal">R$ {formattedItemTotal}</span>
                         </div>
                       </div>
-                      <button className="cart-item-remove" onClick={() => removeFromCart(item.id)} aria-label="Remover item">
+                      <button className="cart-item-remove" onClick={() => handleRemoveItem(item.id)} aria-label="Remover item">
                         <Trash2 size={16} />
                       </button>
                     </div>
