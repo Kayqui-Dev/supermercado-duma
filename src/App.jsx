@@ -11,7 +11,9 @@ import {
   Trash2,
   Plus,
   Minus,
-  X
+  X,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import './App.css';
 
@@ -57,7 +59,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Catálogo Ampliado de Produtos em Promoção (Contém Carnes + Produtos de Outros Setores)
+  // Catálogo Ampliado de Produtos em Promoção
   const produtosCatalogo = [
     // Carnes / Açougue (Promoções Especiais)
     {
@@ -345,6 +347,16 @@ function App() {
     }
   };
 
+  // Rolar o Carrossel via Setas
+  const scrollCarousel = (setorId, direction) => {
+    const container = document.getElementById(`carousel-${setorId}`);
+    if (container) {
+      const cardWidth = 280 + 24; // Largura do card + gap no desktop
+      const scrollAmount = direction === 'left' ? -cardWidth * 2 : cardWidth * 2;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   // GSAP: Animações de Entrada
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -528,7 +540,7 @@ function App() {
             </div>
           </div>
 
-          {/* Fileiras de Categorias com Produtos */}
+          {/* Fileiras de Categorias com Carrossel de Produtos */}
           <div className="category-rows-container">
             {setores.map(setor => {
               const produtosDoSetor = produtosCatalogo.filter(prod => prod.categoria === setor.id);
@@ -540,10 +552,31 @@ function App() {
                     <h3 className="category-row-title">
                       <span className="category-emoji">{setor.emoji}</span> {setor.nome}
                     </h3>
-                    <span className="category-items-count">{produtosDoSetor.length} Ofertas</span>
+                    
+                    <div className="category-header-actions">
+                      <span className="category-items-count" style={{ marginRight: '8px' }}>{produtosDoSetor.length} Ofertas</span>
+                      {/* Setas de Controle do Carrossel (Desktop) */}
+                      <div className="carousel-nav-buttons">
+                        <button 
+                          className="carousel-nav-btn" 
+                          onClick={() => scrollCarousel(setor.id, 'left')}
+                          aria-label={`Rolar ${setor.nome} para esquerda`}
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button 
+                          className="carousel-nav-btn" 
+                          onClick={() => scrollCarousel(setor.id, 'right')}
+                          aria-label={`Rolar ${setor.nome} para direita`}
+                        >
+                          <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="category-products-scroll scrollbar-hide">
+                  {/* Carrossel Horizontal de Produtos */}
+                  <div id={`carousel-${setor.id}`} className="category-products-carousel scrollbar-hide">
                     {produtosDoSetor.map(prod => {
                       const cartItem = cart.find(item => item.id === prod.id);
                       return (

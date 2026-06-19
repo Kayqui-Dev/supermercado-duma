@@ -906,25 +906,86 @@ section {
   text-transform: uppercase;
 }
 
-.category-products-scroll {
-  display: grid;
-  grid-template-cols: repeat(2, 1fr); /* 2 colunas no mobile */
+.category-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.category-products-carousel {
+  display: flex;
+  overflow-x: auto;
   gap: 16px;
-  padding: 12px 4px;
+  padding: 12px 4px 20px 4px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
-.category-products-scroll .product-card {
-  width: 100%;
+/* Garante que no mobile os cards tenham largura definida para rolagem */
+.category-products-carousel .product-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
 }
 
-/* Grid elegante no Desktop */
+/* Desktop */
 @media (min-width: 768px) {
-  .category-products-scroll {
-    grid-template-cols: repeat(4, 1fr); /* 4 colunas no desktop */
+  .category-products-carousel {
     gap: 24px;
-    padding-bottom: 0;
+    padding-bottom: 8px;
+  }
+
+  .category-products-carousel .product-card {
+    flex: 0 0 280px;
   }
 }
+
+/* Esconde scrollbars nativas nos carrosséis */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Setas de Controle do Carrossel */
+.carousel-nav-buttons {
+  display: none; /* Oculta no mobile */
+}
+
+@media (min-width: 768px) {
+  .carousel-nav-buttons {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.carousel-nav-btn {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: auto;
+}
+
+.carousel-nav-btn:hover {
+  background-color: var(--brand-red);
+  color: #ffffff;
+  border-color: var(--brand-red);
+  transform: scale(1.05);
+}
+
+.carousel-nav-btn:active {
+  transform: scale(0.95);
+}
+
 
 
 /* ==========================================================================
