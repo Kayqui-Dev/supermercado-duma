@@ -24,6 +24,9 @@ function App() {
   // Estado de Controle de Rolagem da Navbar
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Estado de Categoria Selecionada do Catálogo
+  const [selectedCategory, setSelectedCategory] = useState('todos');
+
   // Monitorar Rolagem para a Navbar Flutuante ("A Ilha Flutuante")
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +68,96 @@ function App() {
     }
   ];
 
+  // Catálogo Geral de Produtos (Utilizando as imagens SVG existentes)
+  const produtosCatalogo = [
+    {
+      id: 101,
+      nome: "Picanha Fatiada Selecionada",
+      preco: "69,99",
+      unidade: "Kg",
+      categoria: "carnes",
+      imagem: "/assets/produtos/picanha.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Picanha Fatiada (R$ 69,99/Kg) do catálogo."
+    },
+    {
+      id: 102,
+      nome: "Feijão Carioca Tipo 1",
+      preco: "7,49",
+      unidade: "Kg",
+      categoria: "mercearia",
+      imagem: "/assets/produtos/feijao.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Feijão Carioca Tipo 1 (R$ 7,49/Kg) do catálogo."
+    },
+    {
+      id: 103,
+      nome: "Tomate Italiano Fresco",
+      preco: "6,99",
+      unidade: "Kg",
+      categoria: "hortifruti",
+      imagem: "/assets/produtos/tomate.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Tomate Italiano (R$ 6,99/Kg) do catálogo."
+    },
+    {
+      id: 104,
+      nome: "Banana Prata de Primeira",
+      preco: "5,49",
+      unidade: "Kg",
+      categoria: "hortifruti",
+      imagem: "/assets/produtos/banana.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Banana Prata (R$ 5,49/Kg) do catálogo."
+    },
+    {
+      id: 105,
+      nome: "Pão Francês Crocante",
+      preco: "14,99",
+      unidade: "Kg",
+      categoria: "padaria",
+      imagem: "/assets/produtos/pao.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Pão Francês (R$ 14,99/Kg) do catálogo."
+    },
+    {
+      id: 106,
+      nome: "Bolo Caseiro de Chocolate",
+      preco: "22,00",
+      unidade: "Un",
+      categoria: "padaria",
+      imagem: "/assets/produtos/bolo.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Bolo Caseiro de Chocolate (R$ 22,00/Un) do catálogo."
+    },
+    {
+      id: 107,
+      nome: "Cerveja Heineken Lata 350ml",
+      preco: "5,99",
+      unidade: "Un",
+      categoria: "adega",
+      imagem: "/assets/produtos/cerveja.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Cerveja Heineken (R$ 5,99/Un) do catálogo."
+    },
+    {
+      id: 108,
+      nome: "Vinho Tinto Fino Reservado",
+      preco: "29,90",
+      unidade: "Un",
+      categoria: "adega",
+      imagem: "/assets/produtos/vinho.svg",
+      msgWhatsApp: "Olá! Gostaria de fazer o pedido de Vinho Tinto Reservado (R$ 29,90/Un) do catálogo."
+    }
+  ];
+
+  // Filtro de Categorias
+  const categorias = [
+    { id: 'todos', nome: 'Todos' },
+    { id: 'carnes', nome: 'Açougue' },
+    { id: 'hortifruti', nome: 'Hortifrúti' },
+    { id: 'padaria', nome: 'Padaria' },
+    { id: 'adega', nome: 'Adega' },
+    { id: 'mercearia', nome: 'Mercearia' }
+  ];
+
+  const produtosFiltrados = selectedCategory === 'todos'
+    ? produtosCatalogo
+    : produtosCatalogo.filter(prod => prod.categoria === selectedCategory);
+
   // GSAP: Animações de Entrada
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -98,13 +191,26 @@ function App() {
       // 2. Animação ScrollTrigger: Encartes
       gsap.from('.flyer-card', {
         scrollTrigger: {
-          trigger: '.flyers-feed',
+          trigger: '.offers-section',
           start: 'top 85%',
         },
-        y: 40,
+        y: 30,
         opacity: 0,
         duration: 0.6,
-        stagger: 0.12,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+
+      // 3. Animação ScrollTrigger: Grid de Produtos
+      gsap.from('.product-card', {
+        scrollTrigger: {
+          trigger: '.catalog-section',
+          start: 'top 85%',
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.05,
         ease: 'power2.out'
       });
     });
@@ -113,7 +219,7 @@ function App() {
   }, []);
 
   const handleWhatsappAction = (messageText) => {
-    const text = encodeURIComponent(messageText || 'Olá! Vi os encartes promocionais do Duma Supermercado e gostaria de fazer um pedido.');
+    const text = encodeURIComponent(messageText || 'Olá! Vi os produtos no site do Duma Supermercado e gostaria de fazer um pedido.');
     window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
   };
 
@@ -131,7 +237,8 @@ function App() {
           </a>
           <ul className="navbar-links">
             <li><a href="#inicio">Início</a></li>
-            <li><a href="#ofertas">Ofertas</a></li>
+            <li><a href="#promocoes">Promoções</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
           <div className="navbar-cta">
@@ -178,17 +285,17 @@ function App() {
         </div>
       </section>
 
-      {/* OFERTAS / ENCARTES DA SEMANA */}
-      <section className="offers-section" id="ofertas">
+      {/* PROMOÇÕES DA SEMANA (ENCARTES EM CARROSSEL MOBILE / GRID DESKTOP) */}
+      <section className="offers-section" id="promocoes">
         <div className="container">
           <div className="section-title-wrapper">
-            <h2 className="section-title">Encartes Digitais</h2>
+            <h2 className="section-title">Promoções Imperdíveis</h2>
             <p className="section-subtitle">
-              Confira as ofertas exclusivas do nosso açougue. Toque no encarte ou no botão para fazer seu pedido direto no WhatsApp!
+              Confira os encartes exclusivos do nosso açougue. Role para o lado no celular ou clique para pedir direto pelo WhatsApp!
             </p>
           </div>
 
-          {/* Feed de Folhas/Flyers de Carnes (Grid Responsivo Premium) */}
+          {/* Feed de Folhas/Flyers de Carnes (Carrossel Horizontal no celular) */}
           <div className="flyers-feed">
             {encartesOfertas.map((flyer) => (
               <article 
@@ -199,7 +306,7 @@ function App() {
               >
                 <div className="flyer-img-container">
                   <img src={flyer.imagem} alt={flyer.nome} loading="lazy" />
-                  <span className="flyer-badge-tag">Oferta da Semana</span>
+                  <span className="flyer-badge-tag">Oferta</span>
                   <div className="flyer-overlay">
                     <MessageCircle size={24} fill="currentColor" />
                     <span>Pedir pelo WhatsApp</span>
@@ -219,9 +326,68 @@ function App() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Botão Principal Central de WhatsApp */}
-          <div className="cta-container">
+      {/* CATÁLOGO DE PRODUTOS (FILTRO POR ABAS E GRID COMPACTO 2 COLUNAS MOBILE) */}
+      <section className="catalog-section" id="catalogo">
+        <div className="container">
+          <div className="section-title-wrapper">
+            <h2 className="section-title">Nosso Catálogo</h2>
+            <p className="section-subtitle">
+              Navegue pelas abas abaixo e confira os preços dos produtos mais vendidos da nossa loja.
+            </p>
+          </div>
+
+          {/* Menu de Abas (Tabs) */}
+          <div className="catalog-tabs-container">
+            <div className="catalog-tabs">
+              {categorias.map(cat => (
+                <button
+                  key={cat.id}
+                  className={`tab-btn ${selectedCategory === cat.id ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(cat.id)}
+                >
+                  {cat.nome}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Grid de Produtos */}
+          <div className="products-grid">
+            {produtosFiltrados.map(prod => (
+              <article 
+                className="product-card" 
+                key={prod.id}
+                onClick={() => handleWhatsappAction(prod.msgWhatsApp)}
+                aria-label={`Pedir ${prod.nome} no WhatsApp`}
+              >
+                <div className="product-img-wrapper">
+                  <img src={prod.imagem} alt={prod.nome} className="product-img" loading="lazy" />
+                  <span className="product-category-badge">{prod.categoria}</span>
+                </div>
+                <div className="product-details">
+                  <h4 className="product-name">{prod.nome}</h4>
+                  <div className="product-pricing">
+                    <span className="currency">R$</span>
+                    <span className="price-val">{prod.preco}</span>
+                    <span className="unit">/{prod.unidade}</span>
+                  </div>
+                  <button 
+                    className="btn-product-whatsapp"
+                    onClick={(e) => { e.stopPropagation(); handleWhatsappAction(prod.msgWhatsApp); }}
+                  >
+                    <MessageCircle size={14} fill="currentColor" />
+                    Pedir
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* Botão Central de WhatsApp */}
+          <div className="cta-container" style={{ marginTop: '40px' }}>
             <button 
               className="btn-cta-whatsapp"
               onClick={() => handleWhatsappAction('Olá! Vi os encartes promocionais do Duma Supermercado e gostaria de enviar minha lista de compras.')}
