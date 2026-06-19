@@ -57,7 +57,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Catálogo Único de Produtos em Promoção (Contém Carnes dos Encartes + Produtos Gerais)
+  // Catálogo Ampliado de Produtos em Promoção (Contém Carnes + Produtos de Outros Setores)
   const produtosCatalogo = [
     // Carnes / Açougue (Promoções Especiais)
     {
@@ -110,21 +110,71 @@ function App() {
       categoria: "carnes",
       imagem: "/assets/produtos/picanha.svg"
     },
+    {
+      id: 201,
+      nome: "Linguiça Toscana Kg",
+      precoOriginal: "26,90",
+      preco: "19,99",
+      desconto: "25% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
+      imagem: "/assets/produtos/linguica.svg"
+    },
+    {
+      id: 202,
+      nome: "Asa de Frango Congelada Kg",
+      precoOriginal: "19,90",
+      preco: "14,99",
+      desconto: "24% OFF",
+      unidade: "Kg",
+      categoria: "carnes",
+      imagem: "/assets/produtos/asa-frango.svg"
+    },
     // Mercearia
     {
       id: 102,
-      nome: "Feijão Carioca Tipo 1",
+      nome: "Feijão Carioca Tipo 1 1kg",
       precoOriginal: "9,90",
       preco: "7,49",
       desconto: "24% OFF",
-      unidade: "Kg",
+      unidade: "Un",
       categoria: "mercearia",
       imagem: "/assets/produtos/feijao.svg"
+    },
+    {
+      id: 203,
+      nome: "Arroz Agulhinha Tipo 1 5kg",
+      precoOriginal: "32,90",
+      preco: "26,99",
+      desconto: "18% OFF",
+      unidade: "Un",
+      categoria: "mercearia",
+      imagem: "/assets/produtos/arroz.svg"
+    },
+    {
+      id: 204,
+      nome: "Óleo de Soja 900ml",
+      precoOriginal: "7,99",
+      preco: "5,99",
+      desconto: "25% OFF",
+      unidade: "Un",
+      categoria: "mercearia",
+      imagem: "/assets/produtos/oleo.svg"
+    },
+    {
+      id: 205,
+      nome: "Café Torrado e Moído 500g",
+      precoOriginal: "21,90",
+      preco: "16,99",
+      desconto: "22% OFF",
+      unidade: "Un",
+      categoria: "mercearia",
+      imagem: "/assets/produtos/cafe.svg"
     },
     // Hortifrúti
     {
       id: 103,
-      nome: "Tomate Italiano Fresco",
+      nome: "Tomate Italiano Fresco Kg",
       precoOriginal: "8,99",
       preco: "6,99",
       desconto: "22% OFF",
@@ -134,7 +184,7 @@ function App() {
     },
     {
       id: 104,
-      nome: "Banana Prata de Primeira",
+      nome: "Banana Prata de Primeira Kg",
       precoOriginal: "6,99",
       preco: "5,49",
       desconto: "21% OFF",
@@ -142,10 +192,30 @@ function App() {
       categoria: "hortifruti",
       imagem: "/assets/produtos/banana.svg"
     },
+    {
+      id: 206,
+      nome: "Batata Monalisa Kg",
+      precoOriginal: "8,49",
+      preco: "6,49",
+      desconto: "23% OFF",
+      unidade: "Kg",
+      categoria: "hortifruti",
+      imagem: "/assets/produtos/batata.svg"
+    },
+    {
+      id: 207,
+      nome: "Cebola Nacional Kg",
+      precoOriginal: "7,99",
+      preco: "5,99",
+      desconto: "25% OFF",
+      unidade: "Kg",
+      categoria: "hortifruti",
+      imagem: "/assets/produtos/cebola.svg"
+    },
     // Padaria
     {
       id: 105,
-      nome: "Pão Francês Crocante",
+      nome: "Pão Francês Crocante Kg",
       precoOriginal: "18,90",
       preco: "14,99",
       desconto: "20% OFF",
@@ -183,6 +253,26 @@ function App() {
       unidade: "Un",
       categoria: "adega",
       imagem: "/assets/produtos/vinho.svg"
+    },
+    {
+      id: 208,
+      nome: "Refrigerante Coca-Cola 2L",
+      precoOriginal: "11,99",
+      preco: "8,99",
+      desconto: "25% OFF",
+      unidade: "Un",
+      categoria: "adega",
+      imagem: "/assets/produtos/coca.svg"
+    },
+    {
+      id: 209,
+      nome: "Suco de Uva Integral 1L",
+      precoOriginal: "16,90",
+      preco: "12,99",
+      desconto: "23% OFF",
+      unidade: "Un",
+      categoria: "adega",
+      imagem: "/assets/produtos/suco.svg"
     }
   ];
 

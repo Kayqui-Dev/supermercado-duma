@@ -907,36 +907,25 @@ section {
 }
 
 .category-products-scroll {
-  display: flex;
-  overflow-x: auto;
+  display: grid;
+  grid-template-cols: repeat(2, 1fr); /* 2 colunas no mobile */
   gap: 16px;
-  padding: 8px 4px 20px 4px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  padding: 12px 4px;
 }
 
-/* No mobile, cada card ocupa uma coluna na fileira */
 .category-products-scroll .product-card {
-  flex: 0 0 260px;
-  scroll-snap-align: start;
+  width: 100%;
 }
 
 /* Grid elegante no Desktop */
 @media (min-width: 768px) {
   .category-products-scroll {
-    display: grid;
-    grid-template-cols: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-cols: repeat(4, 1fr); /* 4 colunas no desktop */
     gap: 24px;
-    overflow-x: visible;
     padding-bottom: 0;
   }
-  
-  .category-products-scroll .product-card {
-    flex: initial;
-    scroll-snap-align: unset;
-  }
 }
+
 
 /* ==========================================================================
    BOTÃO ADICIONAR E SELETOR DE QUANTIDADE NO CARD
