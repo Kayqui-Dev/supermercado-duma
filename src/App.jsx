@@ -6,7 +6,12 @@ import {
   MapPin,
   Clock,
   MessageCircle,
-  ExternalLink
+  ExternalLink,
+  ShoppingCart,
+  Trash2,
+  Plus,
+  Minus,
+  X
 } from 'lucide-react';
 import './App.css';
 
@@ -24,8 +29,20 @@ function App() {
   // Estado de Controle de Rolagem da Navbar
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Estado de Categoria Selecionada do Catálogo
-  const [selectedCategory, setSelectedCategory] = useState('todos');
+  // Estado de Categoria Selecionada do Catálogo (para navegação por âncoras/abas)
+  const [activeCategory, setActiveCategory] = useState('todos');
+
+  // Estado do Carrinho de Compras
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem('duma_cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Salvar Carrinho no LocalStorage sempre que alterar
+  useEffect(() => {
+    localStorage.setItem('duma_cart', JSON.stringify(cart));
+  }, [cart]);
 
   // Monitorar Rolagem para a Navbar Flutuante ("A Ilha Flutuante")
   useEffect(() => {
@@ -51,8 +68,7 @@ function App() {
       desconto: "15% OFF",
       unidade: "Kg",
       categoria: "carnes",
-      imagem: "/assets/promos/alcatra.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Alcatra c/ Maminha em oferta (R$ 41,99/Kg) do catálogo."
+      imagem: "/assets/promos/alcatra.jpg"
     },
     {
       id: 2,
@@ -62,8 +78,7 @@ function App() {
       desconto: "16% OFF",
       unidade: "Kg",
       categoria: "carnes",
-      imagem: "/assets/promos/patinho.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Patinho em oferta (R$ 38,49/Kg) do catálogo."
+      imagem: "/assets/promos/patinho.jpg"
     },
     {
       id: 3,
@@ -73,8 +88,7 @@ function App() {
       desconto: "15% OFF",
       unidade: "Kg",
       categoria: "carnes",
-      imagem: "/assets/promos/lagarto.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Lagarto em oferta (R$ 36,49/Kg) do catálogo."
+      imagem: "/assets/promos/lagarto.jpg"
     },
     {
       id: 4,
@@ -84,8 +98,7 @@ function App() {
       desconto: "20% OFF",
       unidade: "Kg",
       categoria: "carnes",
-      imagem: "/assets/promos/costela.jpg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Costela Ponta de Agulha em oferta (R$ 23,99/Kg) do catálogo."
+      imagem: "/assets/promos/costela.jpg"
     },
     {
       id: 101,
@@ -95,8 +108,7 @@ function App() {
       desconto: "22% OFF",
       unidade: "Kg",
       categoria: "carnes",
-      imagem: "/assets/produtos/picanha.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Picanha Fatiada em oferta (R$ 69,99/Kg) do catálogo."
+      imagem: "/assets/produtos/picanha.svg"
     },
     // Mercearia
     {
@@ -107,8 +119,7 @@ function App() {
       desconto: "24% OFF",
       unidade: "Kg",
       categoria: "mercearia",
-      imagem: "/assets/produtos/feijao.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Feijão Carioca Tipo 1 em oferta (R$ 7,49/Kg) do catálogo."
+      imagem: "/assets/produtos/feijao.svg"
     },
     // Hortifrúti
     {
@@ -119,8 +130,7 @@ function App() {
       desconto: "22% OFF",
       unidade: "Kg",
       categoria: "hortifruti",
-      imagem: "/assets/produtos/tomate.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Tomate Italiano em oferta (R$ 6,99/Kg) do catálogo."
+      imagem: "/assets/produtos/tomate.svg"
     },
     {
       id: 104,
@@ -130,8 +140,7 @@ function App() {
       desconto: "21% OFF",
       unidade: "Kg",
       categoria: "hortifruti",
-      imagem: "/assets/produtos/banana.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Banana Prata em oferta (R$ 5,49/Kg) do catálogo."
+      imagem: "/assets/produtos/banana.svg"
     },
     // Padaria
     {
@@ -142,8 +151,7 @@ function App() {
       desconto: "20% OFF",
       unidade: "Kg",
       categoria: "padaria",
-      imagem: "/assets/produtos/pao.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Pão Francês Crocante em oferta (R$ 14,99/Kg) do catálogo."
+      imagem: "/assets/produtos/pao.svg"
     },
     {
       id: 106,
@@ -153,8 +161,7 @@ function App() {
       desconto: "21% OFF",
       unidade: "Un",
       categoria: "padaria",
-      imagem: "/assets/produtos/bolo.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Bolo Caseiro de Chocolate em oferta (R$ 22,00/Un) do catálogo."
+      imagem: "/assets/produtos/bolo.svg"
     },
     // Adega
     {
@@ -165,8 +172,7 @@ function App() {
       desconto: "20% OFF",
       unidade: "Un",
       categoria: "adega",
-      imagem: "/assets/produtos/cerveja.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Cerveja Heineken Lata em oferta (R$ 5,99/Un) do catálogo."
+      imagem: "/assets/produtos/cerveja.svg"
     },
     {
       id: 108,
@@ -176,24 +182,78 @@ function App() {
       desconto: "25% OFF",
       unidade: "Un",
       categoria: "adega",
-      imagem: "/assets/produtos/vinho.svg",
-      msgWhatsApp: "Olá! Gostaria de encomendar Vinho Tinto Reservado em oferta (R$ 29,90/Un) do catálogo."
+      imagem: "/assets/produtos/vinho.svg"
     }
   ];
 
-  // Filtro de Categorias
-  const categorias = [
-    { id: 'todos', nome: 'Todos' },
-    { id: 'carnes', nome: 'Açougue' },
-    { id: 'hortifruti', nome: 'Hortifrúti' },
-    { id: 'padaria', nome: 'Padaria' },
-    { id: 'adega', nome: 'Adega' },
-    { id: 'mercearia', nome: 'Mercearia' }
+  // Setores do Supermercado
+  const setores = [
+    { id: 'carnes', nome: 'Açougue', emoji: '🥩' },
+    { id: 'hortifruti', nome: 'Hortifrúti', emoji: '🍎' },
+    { id: 'padaria', nome: 'Padaria', emoji: '🥖' },
+    { id: 'adega', nome: 'Adega', emoji: '🍷' },
+    { id: 'mercearia', nome: 'Mercearia', emoji: '🛒' }
   ];
 
-  const produtosFiltrados = selectedCategory === 'todos'
-    ? produtosCatalogo
-    : produtosCatalogo.filter(prod => prod.categoria === selectedCategory);
+  // Funções do Carrinho
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === product.id ? { ...item, quantidade: item.quantidade + 1 } : item
+        );
+      }
+      return [...prevCart, { ...product, quantidade: 1 }];
+    });
+  };
+
+  const updateQuantity = (productId, amount) => {
+    setCart((prevCart) => {
+      return prevCart
+        .map((item) => {
+          if (item.id === productId) {
+            const newQty = item.quantidade + amount;
+            return newQty > 0 ? { ...item, quantidade: newQty } : null;
+          }
+          return item;
+        })
+        .filter(Boolean);
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const cartItemsCount = cart.reduce((total, item) => total + item.quantidade, 0);
+  
+  const cartTotal = cart.reduce((total, item) => {
+    const price = parseFloat(item.preco.replace(',', '.'));
+    return total + price * item.quantidade;
+  }, 0);
+
+  // Rolagem Suave até a Seção da Categoria
+  const scrollToCategory = (categoryId) => {
+    setActiveCategory(categoryId);
+    const element = document.getElementById(`cat-${categoryId}`);
+    if (element) {
+      const offset = 90;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // GSAP: Animações de Entrada
   useEffect(() => {
@@ -225,7 +285,7 @@ function App() {
         ease: 'back.out(1.2)'
       }, '-=0.2');
 
-      // 2. Animação ScrollTrigger: Grid de Produtos
+      // 2. Animação ScrollTrigger: Cards de Produtos
       gsap.from('.product-card', {
         scrollTrigger: {
           trigger: '.catalog-section',
@@ -247,9 +307,35 @@ function App() {
     window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
   };
 
+  const finalizarPedidoWhatsApp = () => {
+    if (cart.length === 0) return;
+
+    let mensagem = `🛒 *NOVO PEDIDO - DUMA SUPERMERCADO*\n`;
+    mensagem += `=====================================\n`;
+    mensagem += `Olá! Gostaria de fazer o seguinte pedido do catálogo:\n\n`;
+
+    cart.forEach((item, index) => {
+      const unitPrice = parseFloat(item.preco.replace(',', '.'));
+      const itemTotal = unitPrice * item.quantidade;
+      const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
+      
+      mensagem += `*${index + 1}. ${item.nome}*\n`;
+      mensagem += `   Qtd: ${item.quantidade} ${item.unidade} | Preço: R$ ${item.preco}/${item.unidade}\n`;
+      mensagem += `   Subtotal: R$ ${formattedItemTotal}\n\n`;
+    });
+
+    mensagem += `=====================================\n`;
+    mensagem += `*TOTAL DO PEDIDO: R$ ${cartTotal.toFixed(2).replace('.', ',')}*\n`;
+    mensagem += `=====================================\n\n`;
+    mensagem += `*Formas de entrega e pagamento a combinar.*`;
+
+    const text = encodeURIComponent(mensagem);
+    window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
+  };
+
   return (
     <>
-      {/* NAVBAR — "A Ilha Flutuante" (Pill-shaped, fixed e sempre com logo-white.png sem fundo) */}
+      {/* NAVBAR — "A Ilha Flutuante" */}
       <nav className={`pill-navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
           <a href="#" className="navbar-logo" aria-label="Duma Supermercado">
@@ -264,7 +350,17 @@ function App() {
             <li><a href="#catalogo">Catálogo</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
-          <div className="navbar-cta">
+          
+          <div className="navbar-actions">
+            <button 
+              className="navbar-cart-btn"
+              onClick={() => setIsCartOpen(true)}
+              aria-label="Abrir carrinho"
+            >
+              <ShoppingCart size={20} />
+              {cartItemsCount > 0 && <span className="cart-badge-count">{cartItemsCount}</span>}
+            </button>
+            
             <a 
               href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de falar com o atendimento do Duma Supermercado.')}`}
               target="_blank" 
@@ -308,77 +404,121 @@ function App() {
         </div>
       </section>
 
-      {/* CATÁLOGO DE PRODUTOS (FILTRO POR ABAS E GRID COMPACTO 2 COLUNAS MOBILE) */}
+      {/* CATÁLOGO DE PRODUTOS */}
       <section className="catalog-section" id="catalogo">
         <div className="container">
           <div className="section-title-wrapper">
             <h2 className="section-title">Nosso Catálogo de Ofertas</h2>
             <p className="section-subtitle">
-              Confira as promoções ativas em nossos setores. Toque nas abas para filtrar e faça seu pedido direto no WhatsApp!
+              Confira as promoções ativas em nossos setores. Adicione os itens ao carrinho e envie a sua lista direto para o nosso WhatsApp!
             </p>
           </div>
 
-          {/* Menu de Abas (Tabs) */}
+          {/* Menu de Abas (Tabs) para Rolagem Rápida */}
           <div className="catalog-tabs-container">
             <div className="catalog-tabs">
-              {categorias.map(cat => (
+              <button
+                className={`tab-btn ${activeCategory === 'todos' ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveCategory('todos');
+                  document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Todos
+              </button>
+              {setores.map(setor => (
                 <button
-                  key={cat.id}
-                  className={`tab-btn ${selectedCategory === cat.id ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  key={setor.id}
+                  className={`tab-btn ${activeCategory === setor.id ? 'active' : ''}`}
+                  onClick={() => scrollToCategory(setor.id)}
                 >
-                  {cat.nome}
+                  {setor.nome}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Grid de Produtos */}
-          <div className="products-grid">
-            {produtosFiltrados.map(prod => (
-              <article 
-                className="product-card" 
-                key={prod.id}
-                onClick={() => handleWhatsappAction(prod.msgWhatsApp)}
-                aria-label={`Pedir ${prod.nome} no WhatsApp`}
-              >
-                <div className="product-img-wrapper">
-                  <img src={prod.imagem} alt={prod.nome} className="product-img" loading="lazy" />
-                  <span className="product-discount-badge">{prod.desconto}</span>
-                  <span className="product-category-badge">{prod.categoria}</span>
-                </div>
-                <div className="product-details">
-                  <h4 className="product-name">{prod.nome}</h4>
-                  <div className="product-pricing">
-                    <span className="price-original">R$ {prod.precoOriginal}</span>
-                    <div className="price-promo">
-                      <span className="currency">R$</span>
-                      <span className="price-val">{prod.preco}</span>
-                      <span className="unit">/{prod.unidade}</span>
-                    </div>
+          {/* Fileiras de Categorias com Produtos */}
+          <div className="category-rows-container">
+            {setores.map(setor => {
+              const produtosDoSetor = produtosCatalogo.filter(prod => prod.categoria === setor.id);
+              if (produtosDoSetor.length === 0) return null;
+
+              return (
+                <div key={setor.id} id={`cat-${setor.id}`} className="category-row-section">
+                  <div className="category-row-header">
+                    <h3 className="category-row-title">
+                      <span className="category-emoji">{setor.emoji}</span> {setor.nome}
+                    </h3>
+                    <span className="category-items-count">{produtosDoSetor.length} Ofertas</span>
                   </div>
-                  <button 
-                    className="btn-product-whatsapp"
-                    onClick={(e) => { e.stopPropagation(); handleWhatsappAction(prod.msgWhatsApp); }}
-                  >
-                    <MessageCircle size={14} fill="currentColor" />
-                    Pedir
-                  </button>
+
+                  <div className="category-products-scroll scrollbar-hide">
+                    {produtosDoSetor.map(prod => {
+                      const cartItem = cart.find(item => item.id === prod.id);
+                      return (
+                        <article 
+                          className="product-card" 
+                          key={prod.id}
+                          aria-label={`Produto: ${prod.nome}`}
+                        >
+                          <div className="product-img-wrapper">
+                            <img src={prod.imagem} alt={prod.nome} className="product-img" loading="lazy" />
+                            {prod.desconto && <span className="product-discount-badge">{prod.desconto}</span>}
+                            <span className="product-category-badge">{setor.nome}</span>
+                          </div>
+                          
+                          <div className="product-details">
+                            <h4 className="product-name">{prod.nome}</h4>
+                            <div className="product-pricing">
+                              <span className="price-original">R$ {prod.precoOriginal}</span>
+                              <div className="price-promo">
+                                <span className="currency">R$</span>
+                                <span className="price-val">{prod.preco}</span>
+                                <span className="unit">/{prod.unidade}</span>
+                              </div>
+                            </div>
+                            
+                            {cartItem ? (
+                              <div className="quantity-selector" onClick={(e) => e.stopPropagation()}>
+                                <button className="qty-btn" onClick={() => updateQuantity(prod.id, -1)} aria-label="Diminuir quantidade">
+                                  <Minus size={14} />
+                                </button>
+                                <span className="qty-val">{cartItem.quantidade} {prod.unidade}</span>
+                                <button className="qty-btn" onClick={() => addToCart(prod)} aria-label="Aumentar quantidade">
+                                  <Plus size={14} />
+                                </button>
+                              </div>
+                            ) : (
+                              <button 
+                                className="btn-product-add"
+                                onClick={(e) => { e.stopPropagation(); addToCart(prod); }}
+                              >
+                                <Plus size={14} /> Adicionar
+                              </button>
+                            )}
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
                 </div>
-              </article>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Botão Central de WhatsApp */}
-          <div className="cta-container" style={{ marginTop: '40px' }}>
-            <button 
-              className="btn-cta-whatsapp"
-              onClick={() => handleWhatsappAction('Olá! Vi os produtos em promoção no catálogo do Duma Supermercado e gostaria de enviar minha lista de compras.')}
-            >
-              <MessageCircle size={20} fill="currentColor" />
-              📲 ENVIAR MINHA LISTA DE COMPRAS
-            </button>
-          </div>
+          {/* Botão Central de Enviar Lista (aparece se tiver itens no carrinho) */}
+          {cart.length > 0 && (
+            <div className="cta-container" style={{ marginTop: '50px' }}>
+              <button 
+                className="btn-cta-whatsapp"
+                onClick={finalizarPedidoWhatsApp}
+              >
+                <ShoppingCart size={20} />
+                📲 ENVIAR MINHA LISTA DE COMPRAS ({cartItemsCount})
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -442,6 +582,19 @@ function App() {
         </div>
       </footer>
 
+      {/* FLOATING CART BUTTON (Apenas quando houver itens, acima do botão do WhatsApp) */}
+      {cartItemsCount > 0 && (
+        <button 
+          className="cart-float-btn"
+          onClick={() => setIsCartOpen(true)}
+          aria-label={`Ver carrinho com ${cartItemsCount} itens`}
+          title="Ver Carrinho"
+        >
+          <ShoppingCart size={24} />
+          <span className="cart-float-badge">{cartItemsCount}</span>
+        </button>
+      )}
+
       {/* FLOATING PULSING WHATSAPP BUTTON (Always on screen) */}
       <a 
         href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de falar com o atendimento do Duma Supermercado.')}`}
@@ -454,7 +607,90 @@ function App() {
         <MessageCircle />
       </a>
 
-      {/* Textura de Ruído (Noise Overlay) conforme gemini.md */}
+      {/* DRAWER DO CARRINHO (SLIDE-OVER) */}
+      <div className={`cart-drawer-overlay ${isCartOpen ? 'open' : ''}`} onClick={() => setIsCartOpen(false)}>
+        <div className={`cart-drawer ${isCartOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
+          <div className="cart-drawer-header">
+            <div className="cart-drawer-title">
+              <ShoppingCart size={22} className="cart-title-icon" />
+              <h3>Meu Carrinho</h3>
+              {cartItemsCount > 0 && <span className="cart-header-count">{cartItemsCount} {cartItemsCount === 1 ? 'item' : 'itens'}</span>}
+            </div>
+            <button className="cart-drawer-close" onClick={() => setIsCartOpen(false)} aria-label="Fechar carrinho">
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="cart-drawer-content">
+            {cart.length === 0 ? (
+              <div className="cart-empty-state">
+                <ShoppingCart size={64} className="cart-empty-icon" />
+                <p className="cart-empty-title">Seu carrinho está vazio</p>
+                <p className="cart-empty-subtitle">Adicione produtos de nosso catálogo para iniciar seu pedido.</p>
+                <button className="btn-continue-shopping" onClick={() => setIsCartOpen(false)}>
+                  Voltar ao Catálogo
+                </button>
+              </div>
+            ) : (
+              <div className="cart-items-list">
+                {cart.map(item => {
+                  const unitPrice = parseFloat(item.preco.replace(',', '.'));
+                  const itemTotal = unitPrice * item.quantidade;
+                  const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
+                  
+                  return (
+                    <div className="cart-item" key={item.id}>
+                      <div className="cart-item-img-wrapper">
+                        <img src={item.imagem} alt={item.nome} className="cart-item-img" />
+                      </div>
+                      <div className="cart-item-details">
+                        <h4 className="cart-item-name">{item.nome}</h4>
+                        <span className="cart-item-price-unit">R$ {item.preco} / {item.unidade}</span>
+                        <div className="cart-item-actions">
+                          <div className="cart-item-qty-control">
+                            <button onClick={() => updateQuantity(item.id, -1)} aria-label="Diminuir quantidade">
+                              <Minus size={12} />
+                            </button>
+                            <span className="cart-item-qty-value">{item.quantidade}</span>
+                            <button onClick={() => addToCart(item)} aria-label="Aumentar quantidade">
+                              <Plus size={12} />
+                            </button>
+                          </div>
+                          <span className="cart-item-subtotal">R$ {formattedItemTotal}</span>
+                        </div>
+                      </div>
+                      <button className="cart-item-remove" onClick={() => removeFromCart(item.id)} aria-label="Remover item">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {cart.length > 0 && (
+            <div className="cart-drawer-footer">
+              <div className="cart-summary-row">
+                <span>Total Geral</span>
+                <span className="cart-total-value">R$ {cartTotal.toFixed(2).replace('.', ',')}</span>
+              </div>
+              <p className="cart-footer-disclaimer">Pedido mínimo e entrega sujeitos a disponibilidade e taxas adicionais.</p>
+              <div className="cart-footer-buttons">
+                <button className="btn-cart-checkout" onClick={finalizarPedidoWhatsApp}>
+                  <MessageCircle size={18} fill="currentColor" />
+                  Finalizar pelo WhatsApp
+                </button>
+                <button className="btn-cart-clear" onClick={clearCart}>
+                  Limpar Carrinho
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Textura de Ruído (Noise Overlay) */}
       <svg style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', opacity: 0.035, pointerEvents: 'none', zIndex: 9999 }} xmlns="http://www.w3.org/2000/svg">
         <filter id="noiseFilter">
           <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
