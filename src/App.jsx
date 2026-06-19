@@ -157,11 +157,6 @@ function App() {
 
   return (
     <>
-      {/* Editorial Vertical Ribbon (Magazine Aesthetic) */}
-      <div className="editorial-badge">
-        desde 1994 • qualidade e frescor
-      </div>
-
       {/* HEADER */}
       <header className="main-header">
         <div className="container header-flex">
@@ -172,6 +167,16 @@ function App() {
             <MapPin size={16} />
             <span>{address}</span>
           </div>
+          {/* Botão WhatsApp Exclusivo Mobile no Cabeçalho */}
+          <a 
+            href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de falar com o atendimento do Duma Supermercado.')}`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="header-whatsapp-mobile"
+            aria-label="Falar no WhatsApp"
+          >
+            <MessageCircle size={20} />
+          </a>
         </div>
       </header>
 
@@ -195,6 +200,26 @@ function App() {
           </p>
         </div>
       </section>
+
+      {/* LETREIRO ROLANTE (RETAIL MARQUEE) */}
+      <div className="marquee-container">
+        <div className="marquee-content">
+          <span>🔥 SHOW DE OFERTAS DUMA 🔥</span>
+          <span>COMPRE PELO WHATSAPP E RECEBA EM CASA 🔥</span>
+          <span>CARNES FRESCAS TODOS OS DIAS 🔥</span>
+          <span>SHOW DE OFERTAS DUMA 🔥</span>
+          <span>COMPRE PELO WHATSAPP E RECEBA EM CASA 🔥</span>
+          <span>CARNES FRESCAS TODOS OS DIAS 🔥</span>
+        </div>
+        <div className="marquee-content" aria-hidden="true">
+          <span>🔥 SHOW DE OFERTAS DUMA 🔥</span>
+          <span>COMPRE PELO WHATSAPP E RECEBA EM CASA 🔥</span>
+          <span>CARNES FRESCAS TODOS OS DIAS 🔥</span>
+          <span>SHOW DE OFERTAS DUMA 🔥</span>
+          <span>COMPRE PELO WHATSAPP E RECEBA EM CASA 🔥</span>
+          <span>CARNES FRESCAS TODOS OS DIAS 🔥</span>
+        </div>
+      </div>
 
       {/* OFERTAS / ENCARTES DA SEMANA */}
       <section className="offers-section" id="ofertas">
