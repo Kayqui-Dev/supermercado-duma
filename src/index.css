@@ -725,24 +725,8 @@ section {
 .main-footer {
   background-color: #1E3A8A; /* Azul sólido oficial da marca */
   color: #ffffff;
-  padding: 40px 0 24px 0; /* Espaçamento mais compacto */
+  padding: 48px 0 24px 0; /* Compacto e limpo */
   border-top: 6px solid var(--brand-yellow);
-}
-
-.footer-cta-section {
-  text-align: center;
-  padding-bottom: 24px; /* Espaçamento reduzido */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  margin-bottom: 24px; /* Espaçamento reduzido */
-}
-
-.footer-cta-section h2 {
-  font-family: var(--font-title);
-  font-size: clamp(1.4rem, 2.5vw + 0.5rem, 2rem);
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 20px;
-  text-transform: uppercase;
 }
 
 .footer-cta-btn {
@@ -753,35 +737,37 @@ section {
   color: #ffffff;
   font-family: var(--font-title);
   font-weight: 900;
-  font-size: clamp(14px, 1.5vw, 16px);
+  font-size: 13px;
   text-transform: uppercase;
-  padding: 16px 36px;
+  padding: 12px 24px;
   border-radius: var(--radius-full);
   text-decoration: none;
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation: 2s ease-in-out infinite pulse-green;
-  min-height: 48px;
+  min-height: 42px;
+  width: 100%;
+  max-width: 280px;
 }
 
 .footer-cta-btn:hover {
   background-color: var(--brand-green-hover);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
 }
 
 .footer-grid {
   display: grid;
   grid-template-cols: 1fr;
   gap: 32px;
-  padding-bottom: 40px;
+  padding-bottom: 32px;
   align-items: start; /* Alinha os blocos no topo */
 }
 
 @media (min-width: 768px) {
   .footer-grid {
-    grid-template-cols: repeat(3, 1fr);
-    gap: 32px; /* Espaçamento otimizado */
+    grid-template-cols: 1.2fr 1fr 1.3fr; /* Proporção ideal de 3 colunas preenchendo o lado direito */
+    gap: 40px;
   }
 }
 

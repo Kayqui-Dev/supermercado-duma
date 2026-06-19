@@ -799,21 +799,9 @@ function App() {
 
       {/* FOOTER */}
       <footer className="main-footer" id="contato">
-        <div className="container footer-cta-section">
-          <h2>Pronto para economizar? Faça seu pedido sem sair de casa.</h2>
-          <a 
-            href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de fazer o seguinte pedido do catálogo.')}`}
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="footer-cta-btn"
-          >
-            📲 PEDIR AGORA NO WHATSAPP
-          </a>
-        </div>
-
         <div className="container footer-grid">
           {/* Coluna 1: Marca */}
-          <div className="footer-col">
+          <div className="footer-col footer-brand-col">
             <div className="footer-logo-wrapper" style={{ marginBottom: '16px' }}>
               <img 
                 src="/assets/logo-white.png" 
@@ -837,21 +825,37 @@ function App() {
             </a>
           </div>
 
-          {/* Coluna 2: Localização */}
-          <div className="footer-col">
-            <h4>📍 Onde Estamos</h4>
-            <p style={{ color: '#E2E8F0', lineHeight: '1.8' }}>
-              Av. Elísio Teixeira Leite, 6061<br />
-              São Paulo, SP - CEP 02810-000
-            </p>
+          {/* Coluna 2: Localização e Setores */}
+          <div className="footer-col footer-info-col">
+            <div style={{ marginBottom: '24px' }}>
+              <h4>📍 Onde Estamos</h4>
+              <p style={{ color: '#E2E8F0', lineHeight: '1.6' }}>
+                Av. Elísio Teixeira Leite, 6061<br />
+                São Paulo, SP - CEP 02810-000
+              </p>
+            </div>
+            <div>
+              <h4>🛒 Nossos Setores</h4>
+              <p style={{ color: '#E2E8F0', lineHeight: '1.6' }}>
+                Açougue, Padaria, Hortifrúti, Mercearia e Adega.
+              </p>
+            </div>
           </div>
 
-          {/* Coluna 3: Nossos Setores */}
-          <div className="footer-col">
-            <h4>🛒 Nossos Setores</h4>
-            <p style={{ color: '#E2E8F0', lineHeight: '1.8' }}>
-              Açougue, Padaria, Hortifrúti, Mercearia e Adega.
+          {/* Coluna 3: Chamada para Ação (CTA) */}
+          <div className="footer-col footer-cta-col">
+            <h4>Pronto para economizar?</h4>
+            <p style={{ color: '#E2E8F0', marginBottom: '18px', lineHeight: '1.6' }}>
+              Faça seu pedido sem sair de casa pelo WhatsApp.
             </p>
+            <a 
+              href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de fazer o seguinte pedido do catálogo.')}`}
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="footer-cta-btn"
+            >
+              📲 PEDIR AGORA NO WHATSAPP
+            </a>
           </div>
         </div>
 
