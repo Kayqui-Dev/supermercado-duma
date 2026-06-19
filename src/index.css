@@ -1030,16 +1030,29 @@ section {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: var(--brand-red-light);
-  border: 1px solid rgba(229, 35, 33, 0.2);
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-full);
   padding: 3px;
   min-height: 38px;
   margin-top: auto;
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02);
+  animation: qty-selector-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes qty-selector-pop {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .qty-btn {
-  background-color: var(--brand-red);
+  background-color: var(--brand-blue);
   color: #ffffff;
   border: none;
   width: 32px;
@@ -1049,20 +1062,30 @@ section {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-height: auto;
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.15);
 }
 
 .qty-btn:hover {
-  background-color: var(--brand-red-dark);
+  background-color: var(--brand-red);
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(229, 35, 33, 0.25);
+}
+
+.qty-btn:active {
+  transform: scale(0.9);
 }
 
 .qty-val {
   font-family: var(--font-title);
   font-weight: 800;
-  font-size: 12px;
-  color: var(--brand-red-dark);
+  font-size: 13px;
+  color: var(--brand-blue-dark);
   text-align: center;
+  user-select: none;
 }
+
 
 /* ==========================================================================
    NAVBAR ACTIONS - BOTÃO DO CARRINHO COM CONTAGEM
@@ -1416,40 +1439,46 @@ section {
 .cart-item-qty-control {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-full);
   padding: 2px;
 }
 
 .cart-item-qty-control button {
-  background: transparent;
+  background-color: var(--brand-blue);
   border: none;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--text-secondary);
-  transition: background-color 0.2s ease;
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-height: auto;
 }
 
 .cart-item-qty-control button:hover {
-  background-color: var(--bg-tertiary);
-  color: var(--brand-red);
+  background-color: var(--brand-red);
+  transform: scale(1.1);
+}
+
+.cart-item-qty-control button:active {
+  transform: scale(0.9);
 }
 
 .cart-item-qty-value {
   font-family: var(--font-title);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--brand-blue-dark);
-  width: 24px;
+  width: 28px;
   text-align: center;
+  user-select: none;
 }
+
 
 .cart-item-subtotal {
   font-family: var(--font-title);
