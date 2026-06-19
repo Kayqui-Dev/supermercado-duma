@@ -858,7 +858,7 @@ function App() {
         <div className="container footer-bottom-bar">
           <p>&copy; 2026 Duma Supermercado. Todos os direitos reservados.</p>
           <p>
-            Desenvolvido por <strong>Kodava Solutions</strong>
+            Desenvolvido por <a href="https://kodava.com.br" target="_blank" rel="noopener noreferrer" className="footer-agency-link">Kodava Solutions</a>
           </p>
         </div>
       </footer>
