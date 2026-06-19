@@ -181,9 +181,13 @@ section {
 }
 
 .navbar-logo-img {
-  height: 44px;
+  height: 68px; /* Aumentado para destacar mais a marca */
   object-fit: contain;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pill-navbar.scrolled .navbar-logo-img {
+  height: 56px; /* Reduz ligeiramente ao rolar para economizar espaço e dar efeito premium */
 }
 
 .navbar-logo-img:hover {
@@ -260,7 +264,10 @@ section {
     padding: 8px 16px;
   }
   .navbar-logo-img {
-    height: 36px;
+    height: 48px;
+  }
+  .pill-navbar.scrolled .navbar-logo-img {
+    height: 40px;
   }
   .navbar-btn-whatsapp {
     font-size: 11px;
@@ -724,16 +731,23 @@ section {
 
 .footer-grid {
   display: grid;
-  grid-template-cols: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-cols: 1fr;
+  gap: 32px;
   padding-bottom: 40px;
   border-bottom: 1px solid #1E293B;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .footer-grid {
-    grid-template-cols: 1fr;
-    gap: 32px;
+    grid-template-cols: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-cols: 2.2fr 1.2fr 1.2fr 1.4fr; /* 4 colunas distribuídas perfeitamente na horizontal */
+    gap: 48px;
   }
 }
 

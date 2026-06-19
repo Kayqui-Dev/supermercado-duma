@@ -24,8 +24,8 @@ function App() {
   // Configurações Globais
   const whatsappNumber = '5511992947425'; // WhatsApp de Atendimento
   const displayPhone = '(11) 99294-7425';
-  const address = 'Av. Elísio Teixeira Leite, 6061 - São Paulo, SP';
-  const mapsLink = 'https://maps.google.com/?q=Av.+Elisio+Teixeira+Leite,+6061+-+Sao+Paulo,+SP';
+  const address = 'Av. Elísio Teixeira Leite, 6061 - São Paulo, Brasil - CEP 02810-000';
+  const mapsLink = 'https://maps.google.com/?q=Av+Elisio+Teixeira+Leite+6061,+Sao+Paulo,+Brazil+02810000';
   const whatsappBaseUrl = `https://wa.me/${whatsappNumber}`;
 
   // Estado de Controle de Rolagem da Navbar
@@ -477,20 +477,26 @@ function App() {
   // GSAP: Animações de Entrada Globais
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // 1. Entrada da Hero Section
+      // 1. Entrada da Hero Section (com o Logo grande aparecendo primeiro)
       const heroTimeline = gsap.timeline();
-      heroTimeline.from('.hero-badge', {
+      heroTimeline.from('.hero-logo-container', {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+      })
+      .from('.hero-badge', {
         scale: 0.8,
         opacity: 0,
         duration: 0.5,
         ease: 'back.out(1.7)'
-      })
+      }, '-=0.2')
       .from('.hero-title', {
         y: 30,
         opacity: 0,
         duration: 0.6,
         ease: 'power3.out'
-      }, '-=0.2')
+      }, '-=0.3')
       .from('.hero-subtitle', {
         y: 20,
         opacity: 0,
@@ -620,9 +626,18 @@ function App() {
         </div>
       </nav>
 
-      {/* HERO SECTION (CENTRALIZADA E VERMELHA) */}
+      {/* HERO SECTION (CENTRALIZADA E VERMELHA COM LOGO PROMINENTE) */}
       <section className="hero-section" id="inicio">
         <div className="container hero-centered-content">
+          {/* Logo Prominente de Branding no Hero */}
+          <div className="hero-logo-container">
+            <img 
+              src="/assets/logo-white.png" 
+              alt="Duma Supermercado Logo" 
+              className="hero-logo-img" 
+            />
+          </div>
+
           <span className="hero-badge">Economia e Qualidade Todo Dia</span>
           
           <div className="hero-title-container">
@@ -655,7 +670,7 @@ function App() {
       <section className="catalog-section" id="catalogo">
         <div className="container">
           <div className="section-title-wrapper">
-            <h2 className="section-title">Nosso Catálogo de Ofertas</h2>
+            <h2 className="section-title">Ofertas do Duma Supermercado</h2>
             <p className="section-subtitle">
               Confira as promoções ativas em nossos setores. Adicione os itens ao carrinho e envie a sua lista direto para o nosso WhatsApp!
             </p>
@@ -793,38 +808,66 @@ function App() {
       {/* FOOTER */}
       <footer className="main-footer" id="contato">
         <div className="container footer-grid">
-          {/* Coluna 1: Marca */}
+          {/* Coluna 1: Marca com Logo */}
           <div className="footer-col">
-            <h3>Duma Supermercado</h3>
+            <div className="footer-logo-wrapper" style={{ marginBottom: '16px' }}>
+              <img 
+                src="/assets/logo-white.png" 
+                alt="Duma Supermercado Logo" 
+                className="footer-logo-img" 
+                style={{ height: '50px', objectFit: 'contain' }}
+              />
+            </div>
             <p style={{ marginBottom: '16px' }}>
               Tradição em servir com qualidade, variedade e o menor preço da região de São Paulo.
             </p>
             <p><strong>{address}</strong></p>
           </div>
 
-          {/* Coluna 2: Funcionamento */}
+          {/* Coluna 2: Navegação Rápida (Setores) */}
           <div className="footer-col">
-            <h4>Horário de Atendimento</h4>
+            <h4>Setores</h4>
+            <ul className="footer-links">
+              {setores.map(setor => (
+                <li key={setor.id}>
+                  <span style={{ fontSize: '14px' }}>{setor.emoji}</span>
+                  <a 
+                    href={`#cat-${setor.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToCategory(setor.id);
+                    }}
+                  >
+                    {setor.nome}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Coluna 3: Funcionamento */}
+          <div className="footer-col">
+            <h4>Funcionamento</h4>
             <ul className="footer-links">
               <li>
                 <Clock size={16} />
-                <span>Segunda a Sábado: 08h às 21h</span>
+                <span>Segunda a Sábado:<br />08h às 21h</span>
               </li>
               <li>
                 <Clock size={16} />
-                <span>Domingos e Feriados: 08h às 13h</span>
+                <span>Domingos e Feriados:<br />08h às 13h</span>
               </li>
             </ul>
           </div>
 
-          {/* Coluna 3: Contatos e Pagamentos */}
+          {/* Coluna 4: Contatos e Pagamentos */}
           <div className="footer-col">
-            <h4>Fale Conosco &amp; Rotas</h4>
+            <h4>Contato &amp; Rotas</h4>
             <ul className="footer-links" style={{ marginBottom: '20px' }}>
               <li>
                 <Phone size={16} />
                 <a href={`${whatsappBaseUrl}`} target="_blank" rel="noopener noreferrer">
-                  {displayPhone} (Pedidos WhatsApp)
+                  {displayPhone}
                 </a>
               </li>
               <li>
@@ -835,7 +878,7 @@ function App() {
               </li>
             </ul>
             
-            <h4>Formas de Pagamento</h4>
+            <h4>Pagamento</h4>
             <div className="payment-badges">
               {['Pix', 'Crédito', 'Débito', 'Sodexo', 'Ticket Alimentação', 'VR', 'Dinheiro'].map(badge => (
                 <span className="payment-badge" key={badge}>{badge}</span>
@@ -846,7 +889,7 @@ function App() {
 
         <div className="container footer-bottom">
           <p>&copy; 2026 Duma Supermercado. Todos os direitos reservados.</p>
-          <p>Av. Elísio Teixeira Leite, 6061 - São Paulo, SP</p>
+          <p>{address}</p>
         </div>
       </footer>
 
