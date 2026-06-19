@@ -63,7 +63,7 @@ function App() {
     }
   ];
 
-  // GSAP: Animações de Entrada (Slide Up & Fade In)
+  // GSAP: Animações de Entrada e Counters Animados (CountUp)
   useEffect(() => {
     let ctx = gsap.context(() => {
       // Animação Hero
@@ -87,20 +87,20 @@ function App() {
         ease: 'power3.out'
       }, '-=0.3');
 
-      // Animação dos Flyers
+      // Revelação ScrollTrigger para os Encartes (Flyers)
       gsap.from('.flyer-card', {
         scrollTrigger: {
           trigger: '.flyers-feed',
           start: 'top 85%',
         },
-        y: 50,
+        y: 40,
         opacity: 0,
-        duration: 0.7,
-        stagger: 0.15,
+        duration: 0.6,
+        stagger: 0.1,
         ease: 'power2.out'
       });
       
-      // Animação do botão CTA central
+      // Revelação ScrollTrigger para o botão CTA central
       gsap.from('.cta-container', {
         scrollTrigger: {
           trigger: '.cta-container',
@@ -110,6 +110,40 @@ function App() {
         opacity: 0,
         duration: 0.5,
         ease: 'back.out(1.5)'
+      });
+
+      // Animação progressiva dos números de estatísticas comerciais (CountUp com GSAP)
+      const stats = [
+        { selector: '#stat-clients', endVal: 15000, suffix: '+', isLocale: true },
+        { selector: '#stat-delivery', endVal: 45, suffix: ' min', isLocale: false },
+        { selector: '#stat-offers', endVal: 500, suffix: '+', isLocale: false }
+      ];
+
+      stats.forEach(stat => {
+        const el = document.querySelector(stat.selector);
+        if (!el) return;
+
+        const counterObj = { val: 0 };
+        gsap.to(counterObj, {
+          val: stat.endVal,
+          duration: 2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.stats-section',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          onUpdate: () => {
+            const floorVal = Math.floor(counterObj.val);
+            if (stat.isLocale) {
+              el.innerText = `${stat.suffix}${floorVal.toLocaleString('pt-BR')}`;
+            } else {
+              el.innerText = stat.suffix.startsWith('+') 
+                ? `${stat.suffix}${floorVal}` 
+                : `${floorVal}${stat.suffix}`;
+            }
+          }
+        });
       });
     });
 
@@ -123,6 +157,11 @@ function App() {
 
   return (
     <>
+      {/* Editorial Vertical Ribbon (Magazine Aesthetic) */}
+      <div className="editorial-badge">
+        desde 1994 • qualidade e frescor
+      </div>
+
       {/* HEADER */}
       <header className="main-header">
         <div className="container header-flex">
@@ -140,9 +179,17 @@ function App() {
       <section className="hero-section">
         <div className="container">
           <span className="hero-badge">Economia e Qualidade Todo Dia</span>
-          <h1 className="hero-title">
-            As Melhores <span>Promoções da Semana!</span>
-          </h1>
+          
+          <div className="hero-title-container">
+            <h1 className="hero-title">
+              As Melhores <span>Promoções da Semana!</span>
+            </h1>
+            {/* Inline SVG Underline Drawing Effect */}
+            <svg className="hero-underline-svg" viewBox="0 0 600 20" preserveAspectRatio="none">
+              <path className="hero-underline-path" d="M 10,10 C 200,18 400,18 590,10" />
+            </svg>
+          </div>
+
           <p className="hero-subtitle">
             O Campeão de Ofertas da Região. Tudo o que você precisa com o máximo de frescor e economia no Açougue, Padaria e Hortifrúti.
           </p>
@@ -157,7 +204,7 @@ function App() {
             Confira as ofertas imbatíveis do nosso açougue. Toque no encarte para fazer seu pedido direto no WhatsApp!
           </p>
 
-          {/* Feed de Folhas/Flyers de Carnes (Retrato/Quadrado Gigante) */}
+          {/* Feed de Folhas/Flyers de Carnes (Carrossel Horizontal no Mobile / Grid no Desktop) */}
           <div className="flyers-feed">
             {encartesOfertas.map((flyer) => (
               <article 
@@ -169,7 +216,7 @@ function App() {
                 <div className="flyer-img-container">
                   <img src={flyer.imagem} alt={flyer.nome} loading="lazy" />
                   <div className="flyer-overlay">
-                    <MessageCircle size={28} fill="currentColor" />
+                    <MessageCircle size={24} fill="currentColor" />
                     <span>Pedir pelo WhatsApp</span>
                   </div>
                 </div>
@@ -186,6 +233,24 @@ function App() {
               <MessageCircle size={24} fill="currentColor" />
               📲 COMPRAR AGORA PELO WHATSAPP
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO DE ESTATÍSTICAS COM CONTADORES (Live GSAP Counters) */}
+      <section className="stats-section">
+        <div className="container stats-grid">
+          <div className="stat-card">
+            <div className="stat-number" id="stat-clients">+0</div>
+            <div className="stat-label">Clientes Satisfeitos</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number" id="stat-delivery">0 min</div>
+            <div className="stat-label">Tempo de Entrega</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number" id="stat-offers">+0</div>
+            <div className="stat-label">Ofertas Semanais</div>
           </div>
         </div>
       </section>
