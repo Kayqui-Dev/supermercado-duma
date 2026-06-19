@@ -20,6 +20,25 @@ import './App.css';
 // Registra o ScrollTrigger no GSAP
 gsap.registerPlugin(ScrollTrigger);
 
+const InstagramIcon = ({ size = 24, ...props }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    {...props}
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
 function App() {
   // Configurações Globais
   const whatsappNumber = '5511992947425'; // WhatsApp de Atendimento
@@ -780,89 +799,67 @@ function App() {
 
       {/* FOOTER */}
       <footer className="main-footer" id="contato">
+        <div className="container footer-cta-section">
+          <h2>Pronto para economizar? Faça seu pedido sem sair de casa.</h2>
+          <a 
+            href={`${whatsappBaseUrl}?text=${encodeURIComponent('Olá! Gostaria de fazer o seguinte pedido do catálogo.')}`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="footer-cta-btn"
+          >
+            📲 PEDIR AGORA NO WHATSAPP
+          </a>
+        </div>
+
         <div className="container footer-grid">
-          {/* Coluna 1: Marca com Logo */}
+          {/* Coluna 1: Marca */}
           <div className="footer-col">
             <div className="footer-logo-wrapper" style={{ marginBottom: '16px' }}>
               <img 
                 src="/assets/logo-white.png" 
                 alt="Duma Supermercado Logo" 
                 className="footer-logo-img" 
-                style={{ height: '50px', objectFit: 'contain' }}
+                style={{ height: '56px', objectFit: 'contain' }}
               />
             </div>
-            <p style={{ marginBottom: '16px' }}>
-              Tradição em servir com qualidade, variedade e o menor preço da região de São Paulo.
+            <p style={{ marginBottom: '16px', color: '#E2E8F0' }}>
+              Tradição em servir com qualidade, variedade e o menor preço da região.
             </p>
-            <p><strong>{address}</strong></p>
+            <a 
+              href="https://instagram.com/dumasupermercado" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="footer-instagram-link"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#ffffff', textDecoration: 'none', fontWeight: 600, fontSize: '14px' }}
+            >
+              <InstagramIcon size={18} style={{ color: '#ffffff' }} />
+              @dumasupermercado
+            </a>
           </div>
 
-          {/* Coluna 2: Navegação Rápida (Setores) */}
+          {/* Coluna 2: Localização */}
           <div className="footer-col">
-            <h4>Setores</h4>
-            <ul className="footer-links">
-              {setores.map(setor => (
-                <li key={setor.id}>
-                  <span style={{ fontSize: '14px' }}>{setor.emoji}</span>
-                  <a 
-                    href={`#cat-${setor.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToCategory(setor.id);
-                    }}
-                  >
-                    {setor.nome}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h4>📍 Onde Estamos</h4>
+            <p style={{ color: '#E2E8F0', lineHeight: '1.8' }}>
+              Av. Elísio Teixeira Leite, 6061<br />
+              São Paulo, SP - CEP 02810-000
+            </p>
           </div>
 
-          {/* Coluna 3: Funcionamento */}
+          {/* Coluna 3: Nossos Setores */}
           <div className="footer-col">
-            <h4>Funcionamento</h4>
-            <ul className="footer-links">
-              <li>
-                <Clock size={16} />
-                <span>Segunda a Sábado:<br />08h às 21h</span>
-              </li>
-              <li>
-                <Clock size={16} />
-                <span>Domingos e Feriados:<br />08h às 13h</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Coluna 4: Contatos e Pagamentos */}
-          <div className="footer-col">
-            <h4>Contato &amp; Rotas</h4>
-            <ul className="footer-links" style={{ marginBottom: '20px' }}>
-              <li>
-                <Phone size={16} />
-                <a href={`${whatsappBaseUrl}`} target="_blank" rel="noopener noreferrer">
-                  {displayPhone}
-                </a>
-              </li>
-              <li>
-                <MapPin size={16} />
-                <a href={mapsLink} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  Como Chegar via Maps <ExternalLink size={12} />
-                </a>
-              </li>
-            </ul>
-            
-            <h4>Pagamento</h4>
-            <div className="payment-badges">
-              {['Pix', 'Crédito', 'Débito', 'Sodexo', 'Ticket Alimentação', 'VR', 'Dinheiro'].map(badge => (
-                <span className="payment-badge" key={badge}>{badge}</span>
-              ))}
-            </div>
+            <h4>🛒 Nossos Setores</h4>
+            <p style={{ color: '#E2E8F0', lineHeight: '1.8' }}>
+              Açougue, Padaria, Hortifrúti, Mercearia e Adega.
+            </p>
           </div>
         </div>
 
-        <div className="container footer-bottom">
+        <div className="container footer-bottom-bar">
           <p>&copy; 2026 Duma Supermercado. Todos os direitos reservados.</p>
-          <p>{address}</p>
+          <p>
+            Desenvolvido por <strong>Kodava Solutions</strong>
+          </p>
         </div>
       </footer>
 
