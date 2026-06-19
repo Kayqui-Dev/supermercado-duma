@@ -137,153 +137,195 @@ section {
 }
 
 /* ==========================================================================
-   HEADER (GLASSMORPHISM NAVY)
+   NAVBAR — "A Ilha Flutuante" (Pill-shaped, fixed e centralizada)
    ========================================================================== */
 
-.main-header {
-  background-color: rgba(15, 23, 42, 0.9); /* Navy escuro translúcido */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 3px solid var(--brand-yellow);
-  box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 10px 0;
-  min-height: 72px;
+.pill-navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1000px;
+  z-index: 1000;
+  border-radius: var(--radius-full);
+  padding: 10px 32px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   align-items: center;
 }
 
-.header-flex {
-  width: 100%;
+.pill-navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.85); /* Vidro fosco branco */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  top: 15px;
+}
+
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  width: 100%;
 }
 
-.logo-link {
+.navbar-logo {
   display: flex;
   align-items: center;
   text-decoration: none;
   min-height: 44px;
 }
 
-.logo-img {
-  height: 52px;
+.navbar-logo-img {
+  height: 44px;
   object-fit: contain;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.header-address {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 0 16px;
-  min-height: 44px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.navbar-logo-img:hover {
+  transform: scale(1.05);
 }
 
-@media (min-width: 768px) {
-  .header-address {
-    display: flex;
-  }
-}
-
-.header-address svg {
-  color: var(--brand-yellow);
-  flex-shrink: 0;
-}
-
-.header-whatsapp-mobile {
+.navbar-links {
   display: flex;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ffffff; /* Branco sobre a hero vermelha */
+  transition: all 0.3s ease;
+}
+
+.pill-navbar.scrolled .navbar-links a {
+  color: var(--brand-blue-dark); /* Escuro quando scrolled */
+}
+
+.navbar-links a:hover {
+  color: var(--brand-yellow);
+}
+
+.pill-navbar.scrolled .navbar-links a:hover {
+  color: var(--brand-red);
+}
+
+.navbar-btn-whatsapp {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--brand-green);
-  color: #ffffff;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  background-color: var(--brand-yellow);
+  color: #000000;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  border-radius: var(--radius-full);
   text-decoration: none;
-  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-height: 38px;
 }
 
-.header-whatsapp-mobile:active {
-  transform: scale(0.9);
+.pill-navbar.scrolled .navbar-btn-whatsapp {
+  background-color: var(--brand-red);
+  color: #ffffff;
 }
 
-@media (min-width: 768px) {
-  .header-whatsapp-mobile {
-    display: none;
+.navbar-btn-whatsapp:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* Otimização Mobile para Navbar */
+@media (max-width: 640px) {
+  .navbar-links {
+    display: none; /* Oculta links em telas pequenas */
+  }
+  .pill-navbar {
+    width: 95%;
+    padding: 8px 16px;
+  }
+  .navbar-logo-img {
+    height: 36px;
+  }
+  .navbar-btn-whatsapp {
+    font-size: 11px;
+    padding: 6px 16px;
   }
 }
 
 /* ==========================================================================
-   HERO SECTION (GRID 2 COLUNAS)
+   HERO SECTION (CENTRALIZADA VERMELHA)
    ========================================================================== */
 
 .hero-section {
-  background-color: var(--bg-primary);
-  padding: 80px 0;
+  background-color: var(--brand-red);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 0);
+  background-size: 24px 24px;
+  color: #ffffff;
+  padding: 140px 0 100px 0; /* Padding superior maior para compensar a navbar fixa */
+  text-align: center;
+  position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 6px solid var(--brand-yellow);
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-cols: 1.2fr 0.8fr;
+.hero-centered-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 48px;
-}
-
-@media (max-width: 992px) {
-  .hero-grid {
-    grid-template-cols: 1fr;
-    text-align: center;
-    gap: 32px;
-  }
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .hero-badge {
   display: inline-block;
-  background-color: var(--brand-red-light);
-  color: var(--brand-red-dark);
+  background-color: var(--brand-yellow);
+  color: #000000;
   font-family: var(--font-title);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 18px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow-md);
 }
 
 .hero-title-container {
   position: relative;
   display: inline-block;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero-title {
   font-family: var(--font-title);
-  font-size: clamp(2.2rem, 4.5vw + 0.8rem, 3.6rem);
+  font-size: clamp(2.2rem, 5vw + 0.8rem, 3.8rem);
   font-weight: 900;
   line-height: 1.15;
-  color: var(--brand-blue-dark);
   text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 0 10px;
 }
 
 .hero-title span {
-  color: var(--brand-red);
+  color: var(--brand-yellow);
   position: relative;
   display: inline-block;
 }
@@ -315,137 +357,18 @@ section {
 }
 
 .hero-subtitle {
-  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-  color: var(--text-secondary);
-  margin-bottom: 32px;
+  font-size: clamp(1rem, 1.5vw + 0.6rem, 1.25rem);
+  max-width: 700px;
+  margin: 0 auto 36px auto;
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
-  line-height: 1.6;
-}
-
-@media (max-width: 992px) {
-  .hero-subtitle {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-@media (max-width: 992px) {
-  .hero-actions {
-    justify-content: center;
-  }
-}
-
-/* Coluna Direita: Imagem/Ilustração Premium */
-.hero-visual-container {
-  display: flex;
   justify-content: center;
-  position: relative;
-}
-
-@media (max-width: 992px) {
-  .hero-visual-container {
-    display: none; /* Ocultado no mobile para focar na mensagem e botão */
-  }
-}
-
-.hero-visual-card {
   width: 100%;
-  max-width: 380px;
-  background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-dark) 100%);
-  border-radius: var(--radius-lg);
-  padding: 30px;
-  color: #ffffff;
-  box-shadow: var(--shadow-2xl);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.hero-visual-badge {
-  background-color: var(--brand-yellow);
-  color: #000000;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  align-self: flex-start;
-  text-transform: uppercase;
-}
-
-.hero-visual-title {
-  font-family: var(--font-title);
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1.25;
-}
-
-.hero-visual-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.hero-visual-list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.hero-visual-list svg {
-  color: var(--brand-yellow);
-  flex-shrink: 0;
-}
-
-/* ==========================================================================
-   LETREIRO DIGITAL ROLANTE (RETAIL MARQUEE)
-   ========================================================================== */
-
-.marquee-container {
-  width: 100%;
-  background-color: var(--brand-yellow);
-  overflow: hidden;
-  display: flex;
-  padding: 10px 0;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
-  box-shadow: var(--shadow-sm);
-  position: relative;
-  z-index: 10;
-}
-
-.marquee-content {
-  display: flex;
-  flex-shrink: 0;
-  min-width: 100%;
-  justify-content: space-around;
-  align-items: center;
-  gap: 40px;
-  font-family: var(--font-title);
-  font-size: clamp(12px, 3.5vw, 15px);
-  font-weight: 900;
-  color: #000000;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  animation: marquee-scroll 28s linear infinite;
-}
-
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
 }
 
 /* ==========================================================================
@@ -453,6 +376,7 @@ section {
    ========================================================================== */
 
 .offers-section {
+  padding: 80px 0;
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
 }
@@ -461,7 +385,7 @@ section {
   display: grid;
   grid-template-cols: 1fr;
   gap: 32px;
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 24px 16px;
 }
@@ -474,13 +398,7 @@ section {
 
 @media (min-width: 992px) {
   .flyers-feed {
-    grid-template-cols: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1200px) {
-  .flyers-feed {
-    grid-template-cols: repeat(4, 1fr);
+    grid-template-cols: repeat(4, 1fr); /* 4 colunas em linha única no desktop */
   }
 }
 
@@ -510,8 +428,6 @@ section {
   align-items: center;
   justify-content: center;
   background-color: #f8fafc;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 }
 
 .flyer-img-container img {
@@ -524,6 +440,34 @@ section {
 
 .flyer-card:hover .flyer-img-container img {
   transform: scale(1.04);
+}
+
+.flyer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(229, 35, 33, 0.7); /* Vermelho com transparência no hover */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.flyer-card:hover .flyer-overlay {
+  opacity: 1;
+}
+
+.flyer-overlay span {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 .btn-card-checkout {
@@ -542,272 +486,16 @@ section {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-height: 48px;
   margin-top: auto;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  animation: pulse-card-green 3s infinite ease-in-out;
 }
 
 .btn-card-checkout:hover {
   background-color: var(--brand-green-hover);
-}
-
-@keyframes pulse-card-green {
-  0%, 100% {
-    background-color: var(--brand-green);
-  }
-  50% {
-    background-color: #2edb6f;
-  }
-}
-
-/* ==========================================================================
-   DUMA DEPARTAMENTOS (PASTEL SECTORS)
-   ========================================================================== */
-
-.departments-section {
-  background-color: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.departments-grid {
-  display: grid;
-  grid-template-cols: repeat(5, 1fr);
-  gap: 20px;
-}
-
-@media (max-width: 1024px) {
-  .departments-grid {
-    grid-template-cols: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .departments-grid {
-    grid-template-cols: repeat(2, 1fr);
-  }
-}
-
-.department-card {
-  border-radius: var(--radius-md);
-  padding: 24px 16px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid transparent;
-}
-
-.department-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-}
-
-.dept-icon-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  box-shadow: var(--shadow-sm);
-  font-size: 24px;
-}
-
-.dept-name {
-  font-family: var(--font-title);
-  font-size: 14px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Cores dos Setores */
-.dept-red {
-  background-color: #FEE2E2;
-  color: #991B1B;
-}
-.dept-red:hover { border-color: rgba(153, 27, 27, 0.15); }
-
-.dept-green {
-  background-color: #DCFCE7;
-  color: #166534;
-}
-.dept-green:hover { border-color: rgba(22, 101, 52, 0.15); }
-
-.dept-amber {
-  background-color: #FEF3C7;
-  color: #92400E;
-}
-.dept-amber:hover { border-color: rgba(146, 64, 14, 0.15); }
-
-.dept-purple {
-  background-color: #F3E8FF;
-  color: #6B21A8;
-}
-.dept-purple:hover { border-color: rgba(107, 33, 168, 0.15); }
-
-.dept-slate {
-  background-color: #F1F5F9;
-  color: #334155;
-}
-.dept-slate:hover { border-color: rgba(51, 65, 85, 0.15); }
-
-/* ==========================================================================
-   COMO FUNCIONA O DELIVERY (STEPS FLOW)
-   ========================================================================== */
-
-.delivery-section {
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.delivery-steps {
-  display: grid;
-  grid-template-cols: repeat(3, 1fr);
-  gap: 32px;
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  .delivery-steps {
-    grid-template-cols: 1fr;
-    gap: 40px;
-  }
-}
-
-.step-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 30px 20px;
-  background-color: #ffffff;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  position: relative;
-  transition: transform 0.25s ease;
-}
-
-.step-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-}
-
-.step-number {
-  position: absolute;
-  top: -20px;
-  background-color: var(--brand-red);
-  color: #ffffff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-title);
-  font-weight: 900;
-  font-size: 16px;
-  box-shadow: var(--shadow-md);
-}
-
-.step-icon-wrapper {
-  margin-top: 10px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: var(--brand-blue-light);
-  color: var(--brand-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.step-title {
-  font-family: var(--font-title);
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--brand-blue-dark);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.step-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-/* ==========================================================================
-   STATS SECTION (GSAP COUNTER ANIMATION)
-   ========================================================================== */
-
-.stats-section {
-  padding: 60px 0;
-  background-color: var(--brand-blue-dark);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  background-size: 20px 20px;
-  color: #ffffff;
-  border-top: 4px solid var(--brand-yellow);
-  border-bottom: 4px solid var(--brand-yellow);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-cols: repeat(3, 1fr);
-  gap: 32px;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .stats-grid {
-    grid-template-cols: 1fr;
-    gap: 40px;
-  }
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px 20px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.stat-number {
-  font-family: var(--font-title);
-  font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
-  font-weight: 900;
-  color: var(--brand-yellow);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: clamp(0.85rem, 1vw + 0.5rem, 0.95rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.02);
 }
 
 /* ==========================================================================
