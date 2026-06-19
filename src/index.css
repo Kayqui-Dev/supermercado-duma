@@ -921,6 +921,8 @@ section {
 .category-products-carousel {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden; /* Trava o scroll vertical dentro do carrossel */
+  touch-action: pan-x; /* Habilita apenas scroll horizontal no toque, deixando a rolagem da pagina livre no eixo Y */
   gap: 16px;
   padding: 12px 4px 20px 4px;
   scroll-behavior: smooth;
