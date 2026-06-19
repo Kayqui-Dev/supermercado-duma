@@ -8,7 +8,14 @@ import {
   MessageCircle,
   ThumbsUp,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Beef,
+  Apple,
+  Cookie,
+  Wine,
+  ShoppingBag,
+  CheckCircle2,
+  Sparkles
 } from 'lucide-react';
 import './App.css';
 
@@ -17,56 +24,72 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   // Configurações Globais
-  const whatsappNumber = '5511992947425'; // Novo número do WhatsApp solicitado pelo usuário
+  const whatsappNumber = '5511992947425'; // WhatsApp de Atendimento
   const displayPhone = '(11) 99294-7425';
   const address = 'Av. Elísio Teixeira Leite, 6061 - São Paulo, SP';
   const mapsLink = 'https://maps.google.com/?q=Av.+Elisio+Teixeira+Leite,+6061+-+Sao+Paulo,+SP';
   const whatsappBaseUrl = `https://wa.me/${whatsappNumber}`;
 
-  // Encartes de Carnes Reais
+  // Encartes de Ofertas Reais (Fotos Reais)
   const encartesOfertas = [
     {
       id: 1,
       nome: "Alcatra c/ Maminha Kg",
-      precoOriginal: "49,90",
-      preco: "41,99",
       imagem: "/assets/promos/alcatra.jpg",
-      unidade: "Kg",
       msgWhatsApp: "Olá! Gostaria de encomendar Alcatra c/ Maminha (R$ 41,99/Kg) em promoção."
     },
     {
       id: 2,
       nome: "Patinho Kg",
-      precoOriginal: "45,90",
-      preco: "38,49",
       imagem: "/assets/promos/patinho.jpg",
-      unidade: "Kg",
       msgWhatsApp: "Olá! Gostaria de encomendar Patinho (R$ 38,49/Kg) em promoção."
     },
     {
       id: 3,
       nome: "Lagarto Kg",
-      precoOriginal: "42,90",
-      preco: "36,49",
       imagem: "/assets/promos/lagarto.jpg",
-      unidade: "Kg",
       msgWhatsApp: "Olá! Gostaria de encomendar Lagarto (R$ 36,49/Kg) em promoção."
     },
     {
       id: 4,
       nome: "Costela Ponta de Agulha Kg",
-      precoOriginal: "29,90",
-      preco: "23,99",
       imagem: "/assets/promos/costela.jpg",
-      unidade: "Kg",
       msgWhatsApp: "Olá! Gostaria de encomendar Costela Ponta de Agulha (R$ 23,99/Kg) em promoção."
     }
   ];
 
-  // GSAP: Animações de Entrada e Counters Animados (CountUp)
+  // Departamentos do Supermercado
+  const departamentos = [
+    { id: 1, nome: "Açougue", icon: <Beef size={24} />, class: "dept-red", msg: "Olá! Gostaria de saber os preços e cortes disponíveis de hoje no açougue." },
+    { id: 2, nome: "Hortifrúti", icon: <Apple size={24} />, class: "dept-green", msg: "Olá! Gostaria de saber quais verduras e frutas frescas chegaram hoje." },
+    { id: 3, nome: "Padaria", icon: <Cookie size={24} />, class: "dept-amber", msg: "Olá! Gostaria de saber se tem fornada quente de pão francês agora." },
+    { id: 4, nome: "Adega", icon: <Wine size={24} />, class: "dept-purple", msg: "Olá! Gostaria de saber as ofertas de bebidas e vinhos da semana." },
+    { id: 5, nome: "Mercearia", icon: <ShoppingBag size={24} />, class: "dept-slate", msg: "Olá! Gostaria de enviar minha lista de mercearia para fazer um pedido." }
+  ];
+
+  // Passos de Funcionamento do Delivery
+  const passosDelivery = [
+    {
+      passo: "1",
+      titulo: "Veja os Encartes",
+      desc: "Explore nossas ofertas semanais e encartes de carnes selecionadas logo abaixo."
+    },
+    {
+      passo: "2",
+      titulo: "Envie seu Pedido",
+      desc: "Clique no botão do encarte ou envie sua lista de compras direto no nosso WhatsApp."
+    },
+    {
+      passo: "3",
+      titulo: "Entrega Rápida",
+      desc: "Nossa equipe separa os melhores itens e entrega frescos na sua porta em minutos."
+    }
+  ];
+
+  // GSAP: Animações de Entrada e Contadores Dinâmicos
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // Animação Hero
+      // 1. Entrada da Hero Section
       const heroTimeline = gsap.timeline();
       heroTimeline.from('.hero-badge', {
         scale: 0.8,
@@ -75,7 +98,7 @@ function App() {
         ease: 'back.out(1.7)'
       })
       .from('.hero-title', {
-        y: 40,
+        y: 30,
         opacity: 0,
         duration: 0.6,
         ease: 'power3.out'
@@ -85,9 +108,35 @@ function App() {
         opacity: 0,
         duration: 0.5,
         ease: 'power3.out'
-      }, '-=0.3');
+      }, '-=0.3')
+      .from('.hero-actions > *', {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.1,
+        ease: 'back.out(1.2)'
+      }, '-=0.2')
+      .from('.hero-visual-card', {
+        x: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.6');
 
-      // Revelação ScrollTrigger para os Encartes (Flyers)
+      // 2. Animação ScrollTrigger: Departamentos
+      gsap.from('.department-card', {
+        scrollTrigger: {
+          trigger: '.departments-grid',
+          start: 'top 85%',
+        },
+        scale: 0.85,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: 'back.out(1.5)'
+      });
+
+      // 3. Animação ScrollTrigger: Encartes
       gsap.from('.flyer-card', {
         scrollTrigger: {
           trigger: '.flyers-feed',
@@ -96,23 +145,24 @@ function App() {
         y: 40,
         opacity: 0,
         duration: 0.6,
-        stagger: 0.1,
+        stagger: 0.12,
         ease: 'power2.out'
       });
-      
-      // Revelação ScrollTrigger para o botão CTA central
-      gsap.from('.cta-container', {
+
+      // 4. Animação ScrollTrigger: Passos do Delivery
+      gsap.from('.step-card', {
         scrollTrigger: {
-          trigger: '.cta-container',
-          start: 'top 90%',
+          trigger: '.delivery-steps',
+          start: 'top 85%',
         },
-        scale: 0.9,
+        y: 30,
         opacity: 0,
         duration: 0.5,
-        ease: 'back.out(1.5)'
+        stagger: 0.15,
+        ease: 'power2.out'
       });
 
-      // Animação progressiva dos números de estatísticas comerciais (CountUp com GSAP)
+      // 5. Animação progressiva dos números de estatísticas comerciais (GSAP CountUp)
       const stats = [
         { selector: '#stat-clients', endVal: 15000, suffix: '+', isLocale: true },
         { selector: '#stat-delivery', endVal: 45, suffix: ' min', isLocale: false },
@@ -151,13 +201,13 @@ function App() {
   }, []);
 
   const handleWhatsappAction = (messageText) => {
-    const text = encodeURIComponent(messageText || 'Olá! Vi o encarte de ofertas do Duma Supermercado e gostaria de fazer um pedido.');
+    const text = encodeURIComponent(messageText || 'Olá! Vi os encartes promocionais do Duma Supermercado e gostaria de fazer um pedido.');
     window.open(`${whatsappBaseUrl}?text=${text}`, '_blank');
   };
 
   return (
     <>
-      {/* HEADER */}
+      {/* HEADER (GLASSMORPHISM NAVY) */}
       <header className="main-header">
         <div className="container header-flex">
           <a href="#" className="logo-link" aria-label="Duma Supermercado">
@@ -180,24 +230,60 @@ function App() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION (GRID 2 COLUNAS PREMIUM) */}
       <section className="hero-section">
-        <div className="container">
-          <span className="hero-badge">Economia e Qualidade Todo Dia</span>
-          
-          <div className="hero-title-container">
-            <h1 className="hero-title">
-              As Melhores <span>Promoções da Semana!</span>
-            </h1>
-            {/* Inline SVG Underline Drawing Effect */}
-            <svg className="hero-underline-svg" viewBox="0 0 600 20" preserveAspectRatio="none">
-              <path className="hero-underline-path" d="M 10,10 C 200,18 400,18 590,10" />
-            </svg>
+        <div className="container hero-grid">
+          {/* Coluna Esquerda: Texto e Ações */}
+          <div className="hero-text-block">
+            <span className="hero-badge">Qualidade, Economia e Praticidade</span>
+            <div className="hero-title-container">
+              <h1 className="hero-title">
+                As Melhores <span>Promoções da Semana!</span>
+              </h1>
+              {/* Underline Animado SVG */}
+              <svg className="hero-underline-svg" viewBox="0 0 600 20" preserveAspectRatio="none">
+                <path className="hero-underline-path" d="M 10,10 C 200,18 400,18 590,10" />
+              </svg>
+            </div>
+            <p className="hero-subtitle">
+              Sua casa abastecida com o pão quentinho da padaria, frutas frescas do hortifrúti e carnes nobres selecionadas no açougue. Compre agora sem sair de casa!
+            </p>
+            <div className="hero-actions">
+              <button 
+                className="btn-cta-whatsapp"
+                onClick={() => handleWhatsappAction('Olá! Vi o site do Duma Supermercado e gostaria de ver as ofertas de hoje.')}
+              >
+                <MessageCircle size={20} fill="currentColor" />
+                📲 COMPRAR AGORA PELO WHATSAPP
+              </button>
+            </div>
           </div>
 
-          <p className="hero-subtitle">
-            O Campeão de Ofertas da Região. Tudo o que você precisa com o máximo de frescor e economia no Açougue, Padaria e Hortifrúti.
-          </p>
+          {/* Coluna Direita: Card Visual de Destaque */}
+          <div className="hero-visual-container">
+            <div className="hero-visual-card">
+              <span className="hero-visual-badge">Duma Delivery</span>
+              <h2 className="hero-visual-title">O Campeão de Ofertas da Região!</h2>
+              <ul className="hero-visual-list">
+                <li>
+                  <CheckCircle2 size={18} />
+                  <span>Açougue Inspecionado e Fresco</span>
+                </li>
+                <li>
+                  <CheckCircle2 size={18} />
+                  <span>Padaria com Fornadas de Hora em Hora</span>
+                </li>
+                <li>
+                  <CheckCircle2 size={18} />
+                  <span>Hortifrúti Colhido do Produtor</span>
+                </li>
+                <li>
+                  <CheckCircle2 size={18} />
+                  <span>Entrega Rápida em até 45 minutos</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -221,13 +307,15 @@ function App() {
         </div>
       </div>
 
-      {/* OFERTAS / ENCARTES DA SEMANA */}
+      {/* OFERTAS / ENCARTES DA SEMANA (GRID COMPACTO) */}
       <section className="offers-section" id="ofertas">
         <div className="container">
-          <h2 className="section-title">Nossos Encartes Digitais</h2>
-          <p className="section-desc">
-            Confira as ofertas imbatíveis do nosso açougue. Toque no encarte para fazer seu pedido direto no WhatsApp!
-          </p>
+          <div className="section-title-wrapper">
+            <h2 className="section-title">Encartes Digitais</h2>
+            <p className="section-subtitle">
+              Confira as ofertas exclusivas do nosso açougue. Toque no card ou no botão para fazer seu pedido direto no WhatsApp!
+            </p>
+          </div>
 
           {/* Feed de Folhas/Flyers de Carnes (Grid Responsivo Premium) */}
           <div className="flyers-feed">
@@ -248,15 +336,69 @@ function App() {
             ))}
           </div>
 
-          {/* Central Green Pulsing Button */}
+          {/* Botão Principal Central de WhatsApp */}
           <div className="cta-container">
             <button 
               className="btn-cta-whatsapp"
               onClick={() => handleWhatsappAction('Olá! Vi os encartes promocionais do Duma Supermercado e gostaria de enviar minha lista de compras.')}
             >
-              <MessageCircle size={24} fill="currentColor" />
-              📲 COMPRAR AGORA PELO WHATSAPP
+              <MessageCircle size={20} fill="currentColor" />
+              📲 ENVIAR MINHA LISTA DE COMPRAS
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* DEPARTAMENTOS DO SUPERMERCADO */}
+      <section className="departments-section">
+        <div className="container">
+          <div className="section-title-wrapper">
+            <h2 className="section-title">Nossos Setores</h2>
+            <p className="section-subtitle">
+              Tudo o que você precisa em um só lugar. Selecione um setor para falar com um atendente e fazer perguntas.
+            </p>
+          </div>
+
+          <div className="departments-grid">
+            {departamentos.map(dept => (
+              <div 
+                className={`department-card ${dept.class}`} 
+                key={dept.id}
+                onClick={() => handleWhatsappAction(dept.msg)}
+              >
+                <div className="dept-icon-circle">
+                  {dept.icon}
+                </div>
+                <span className="dept-name">{dept.nome}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COMO FUNCIONA O DELIVERY */}
+      <section className="delivery-section">
+        <div className="container">
+          <div className="section-title-wrapper">
+            <h2 className="section-title">Como Funciona o Delivery?</h2>
+            <p className="section-subtitle">
+              Comprar no Duma Supermercado é rápido e muito simples. Siga os passos e receba tudo fresco.
+            </p>
+          </div>
+
+          <div className="delivery-steps">
+            {passosDelivery.map((passo, idx) => (
+              <div className="step-card" key={idx}>
+                <div className="step-number">{passo.passo}</div>
+                <div className="step-icon-wrapper">
+                  {idx === 0 && <Sparkles size={24} />}
+                  {idx === 1 && <MessageCircle size={24} />}
+                  {idx === 2 && <ThumbsUp size={24} />}
+                </div>
+                <h3 className="step-title">{passo.titulo}</h3>
+                <p className="step-desc">{passo.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
