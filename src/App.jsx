@@ -166,7 +166,7 @@ function App() {
       <header className="main-header">
         <div className="container header-flex">
           <a href="#" className="logo-link" aria-label="Duma Supermercado">
-            <img src="/assets/logo-red.png" alt="Duma Supermercado Logo" className="logo-img" />
+            <img src="/assets/logo-white.png" alt="Duma Supermercado Logo" className="logo-img" />
           </a>
           <div className="header-address">
             <MapPin size={16} />
@@ -204,7 +204,7 @@ function App() {
             Confira as ofertas imbatíveis do nosso açougue. Toque no encarte para fazer seu pedido direto no WhatsApp!
           </p>
 
-          {/* Feed de Folhas/Flyers de Carnes (Carrossel Horizontal no Mobile / Grid no Desktop) */}
+          {/* Feed de Folhas/Flyers de Carnes (Grid Responsivo Premium) */}
           <div className="flyers-feed">
             {encartesOfertas.map((flyer) => (
               <article 
@@ -215,11 +215,10 @@ function App() {
               >
                 <div className="flyer-img-container">
                   <img src={flyer.imagem} alt={flyer.nome} loading="lazy" />
-                  <div className="flyer-overlay">
-                    <MessageCircle size={24} fill="currentColor" />
-                    <span>Pedir pelo WhatsApp</span>
-                  </div>
                 </div>
+                <button className="btn-card-checkout" onClick={(e) => { e.stopPropagation(); handleWhatsappAction(flyer.msgWhatsApp); }}>
+                  🛒 PEDIR NO WHATSAPP
+                </button>
               </article>
             ))}
           </div>
