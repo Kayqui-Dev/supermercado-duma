@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="crustGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3c68f"/>
+      <stop offset="40%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <linearGradient id="crumbGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#fdfdfd" stroke="#f1f1ee" stroke-width="2"/>
+  <!-- Bread shadow -->
+  <ellipse cx="100" cy="135" rx="70" ry="18" fill="#232b28" fill-opacity="0.05"/>
+  <!-- Main Bread Body -->
+  <path d="M35 100 C30 80 50 65 100 65 C150 65 170 80 165 100 C160 120 140 130 100 130 C60 130 40 120 35 100 Z" fill="url(#crustGrad)" stroke="#78350f" stroke-width="1.5"/>
+  <!-- Bread Cut/Score (pestana) -->
+  <path d="M45 92 Q100 80 155 92 C140 96 110 98 100 98 C90 98 60 96 45 92 Z" fill="url(#crumbGrad)" stroke="#b45309" stroke-width="1"/>
+  <!-- Flour dustings / texture -->
+  <path d="M60 75 Q75 72 90 75" fill="none" stroke="#fff" stroke-width="2" opacity="0.4"/>
+  <path d="M110 75 Q125 72 140 75" fill="none" stroke="#fff" stroke-width="2" opacity="0.4"/>
+  <path d="M80 115 Q100 118 120 115" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.3"/>
+</svg>

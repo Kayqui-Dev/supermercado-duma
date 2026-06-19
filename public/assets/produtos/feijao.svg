@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bagGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5e0c3"/>
+      <stop offset="100%" stop-color="#c8a27a"/>
+    </linearGradient>
+    <linearGradient id="beanGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#803018"/>
+      <stop offset="100%" stop-color="#4d1000"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle for presentation -->
+  <circle cx="100" cy="100" r="90" fill="#fdfdfd" stroke="#f1f1ee" stroke-width="2"/>
+  <!-- Bag of Beans -->
+  <path d="M60 40 L140 40 C150 70 155 120 145 160 L55 160 C45 120 50 70 60 40 Z" fill="url(#bagGrad)" stroke="#b58a5c" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Bag top details -->
+  <path d="M57 40 C57 40 70 30 100 30 C130 30 143 40 143 40 L135 50 C135 50 120 45 100 45 C80 45 65 50 65 50 Z" fill="#d8b28a" stroke="#b58a5c" stroke-width="2"/>
+  <!-- String/Tie -->
+  <path d="M65 50 Q100 55 135 50" fill="none" stroke="#8c6239" stroke-width="4"/>
+  <circle cx="100" cy="52" r="5" fill="#8c6239"/>
+  <!-- Label on Bag -->
+  <rect x="70" y="75" width="60" height="55" rx="5" fill="#1b3b8c" stroke="#dc2626" stroke-width="2"/>
+  <text x="100" y="95" fill="#f9f9f6" font-family="Montserrat, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">CAMIL</text>
+  <text x="100" y="112" fill="#facc15" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">Feijão Preto</text>
+  <text x="100" y="122" fill="#f9f9f6" font-family="Inter, sans-serif" font-size="8" text-anchor="middle">1 kg</text>
+  <!-- Decorative Beans in front -->
+  <path d="M55 165 C55 160 65 155 70 162 C75 169 65 175 60 173 C55 171 55 170 55 165 Z" fill="url(#beanGrad)"/>
+  <path d="M135 167 C130 165 132 155 140 157 C148 159 146 170 141 171 C136 172 135 170 135 167 Z" fill="url(#beanGrad)"/>
+</svg>
