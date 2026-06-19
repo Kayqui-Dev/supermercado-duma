@@ -737,17 +737,17 @@ section {
   border-bottom: 1px solid #1E293B;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 480px) {
   .footer-grid {
     grid-template-cols: repeat(2, 1fr);
-    gap: 40px;
+    gap: 32px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .footer-grid {
-    grid-template-cols: 2.2fr 1.2fr 1.2fr 1.4fr; /* 4 colunas distribuídas perfeitamente na horizontal */
-    gap: 48px;
+    grid-template-cols: 2fr 1fr 1fr 1.2fr; /* 4 colunas distribuídas perfeitamente na horizontal */
+    gap: 40px;
   }
 }
 

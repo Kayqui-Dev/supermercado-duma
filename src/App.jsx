@@ -477,26 +477,20 @@ function App() {
   // GSAP: Animações de Entrada Globais
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // 1. Entrada da Hero Section (com o Logo grande aparecendo primeiro)
+      // 1. Entrada da Hero Section
       const heroTimeline = gsap.timeline();
-      heroTimeline.from('.hero-logo-container', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'back.out(1.7)'
-      })
-      .from('.hero-badge', {
+      heroTimeline.from('.hero-badge', {
         scale: 0.8,
         opacity: 0,
         duration: 0.5,
         ease: 'back.out(1.7)'
-      }, '-=0.2')
+      })
       .from('.hero-title', {
         y: 30,
         opacity: 0,
         duration: 0.6,
         ease: 'power3.out'
-      }, '-=0.3')
+      }, '-=0.2')
       .from('.hero-subtitle', {
         y: 20,
         opacity: 0,
@@ -509,19 +503,6 @@ function App() {
         duration: 0.4,
         ease: 'back.out(1.2)'
       }, '-=0.2');
-
-      // 2. Animação ScrollTrigger: Cards de Produtos
-      gsap.from('.product-card', {
-        scrollTrigger: {
-          trigger: '.catalog-section',
-          start: 'top 85%',
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: 'power2.out'
-      });
     });
 
     return () => ctx.revert();
@@ -626,17 +607,9 @@ function App() {
         </div>
       </nav>
 
-      {/* HERO SECTION (CENTRALIZADA E VERMELHA COM LOGO PROMINENTE) */}
+      {/* HERO SECTION (CENTRALIZADA E VERMELHA) */}
       <section className="hero-section" id="inicio">
         <div className="container hero-centered-content">
-          {/* Logo Prominente de Branding no Hero */}
-          <div className="hero-logo-container">
-            <img 
-              src="/assets/logo-white.png" 
-              alt="Duma Supermercado Logo" 
-              className="hero-logo-img" 
-            />
-          </div>
 
           <span className="hero-badge">Economia e Qualidade Todo Dia</span>
           
